@@ -3,597 +3,564 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web App de Controle de Férias</title>
+    <title>Controle de Férias - Regional Ampére</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-principal: #121824;
-            --bg-card: #1e2530;
-            --bg-input: #151a22;
-            --vermelho-alerta: #e74c3c;
-            --vermelho-dark: #c0392b;
-            --vermelho-suave: rgba(231, 76, 60, 0.15);
-            --azul-alerta: #3498db;
-            --azul-suave: rgba(52, 152, 219, 0.15);
-            --texto-claro: #f4f6f9;
-            --texto-mutado: #94a3b8;
-            --verde-status: #2ecc71;
-            --azul-status: #3498db;
+            --bg-principal: #0d0d11;
+            --bg-card: #16161a;
+            --bg-input: #22222b;
+            --texto-principal: #ffffff;
+            --texto-secundario: #a0a0b0;
+            --vermelho-primario: #e63946;
+            --vermelho-hover: #ff4d5a;
+            --vermelho-suave: rgba(230, 57, 70, 0.1);
+            --borda: #2a2a35;
+            --sucesso: #2ec4b6;
+            --alerta: #ff9f1c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-principal);
-            color: var(--texto-claro);
-            margin: 0;
-            padding: 20px;
+            color: var(--texto-principal);
+            padding: 40px 20px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         h1 {
             text-align: center;
-            font-size: 2rem;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--texto-principal);
+            border-bottom: 3px solid var(--vermelho-primario);
+            padding-bottom: 15px;
+            display: inline-block;
+            width: 100%;
         }
 
-        /* Sistema de Abas */
-        .tabs-nav {
+        h2 {
+            font-size: 1.4rem;
+            margin: 35px 0 20px 0;
+            color: var(--texto-principal);
             display: flex;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #2d3748;
-            padding-bottom: 10px;
         }
 
-        .tab-btn {
-            background: #1a202c;
-            color: var(--texto-mutado);
-            border: 1px solid #2d3748;
-            padding: 10px 20px;
-            cursor: pointer;
+        /* Alertas de Férias */
+        .painel-alertas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .painel-alertas { grid-template-columns: 1fr; }
+        }
+
+        .alerta-box {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid var(--vermelho-primario);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .alerta-box.retorno { border-left-color: var(--sucesso); }
+        .alerta-box.saida { border-left-color: var(--alerta); }
+
+        .alerta-box h3 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alerta-box ul {
+            list-style: none;
+        }
+
+        .alerta-box li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--borda);
+            font-size: 0.95rem;
+            color: var(--texto-secundario);
+        }
+
+        .alerta-box li:last-child { border-bottom: none; }
+        .alerta-box strong { color: var(--texto-principal); }
+
+        /* Formulário */
+        .form-cadastro {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--borda);
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .grid-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, .form-group select {
+            background: var(--bg-input);
+            border: 1px solid var(--borda);
+            color: var(--texto-principal);
+            padding: 10px 12px;
             border-radius: 5px;
-            font-weight: bold;
+            font-size: 0.95rem;
+            outline: none;
             transition: all 0.3s;
         }
 
-        .tab-btn.active {
-            background: var(--vermelho-dark);
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--vermelho-primario);
+            box-shadow: 0 0 0 2px var(--vermelho-suave);
+        }
+
+        btn, button, .btn-submit {
+            background: var(--vermelho-primario);
             color: white;
-            border-color: var(--vermelho-alerta);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Painéis de Alertas */
-        .alert-box {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: none;
-        }
-
-        .alert-danger {
-            background-color: var(--vermelho-suave);
-            border: 1px solid var(--vermelho-alerta);
-        }
-
-        .alert-info {
-            background-color: var(--azul-suave);
-            border: 1px solid var(--azul-alerta);
-        }
-
-        .alert-box h3 {
-            margin-top: 0;
-            font-size: 1.15rem;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+            font-size: 0.9rem;
         }
 
-        .alert-danger h3 { color: #ff6b6b; }
-        .alert-info h3 { color: #54a0ff; }
-
-        .alert-box ul { margin: 0; padding-left: 20px; }
-        .alert-box li { margin-bottom: 6px; color: #f1f2f6; }
-
-        /* Layout em Duas Colunas */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 3.2fr 0.8fr;
-            gap: 25px;
+        btn:hover, button:hover, .btn-submit:hover {
+            background: var(--vermelho-hover);
         }
 
-        @media (max-width: 1200px) {
-            .main-layout { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background-color: var(--bg-card);
+        /* Tabela */
+        .tabela-container {
+            background: var(--bg-card);
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            overflow-x: auto;
+            border: 1px solid var(--borda);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-
-        .table-responsive { overflow-x: auto; }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            font-size: 0.95rem;
         }
 
         th {
-            background-color: var(--vermelho-dark);
-            color: white;
-            padding: 12px 10px;
-            font-size: 0.85rem;
+            background-color: rgba(255, 255, 255, 0.02);
+            color: var(--texto-principal);
+            font-weight: 600;
             text-transform: uppercase;
-            white-space: nowrap;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            padding: 16px;
+            border-bottom: 2px solid var(--borda);
         }
 
         td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #2d3748;
-            font-size: 0.9rem;
-            vertical-align: middle;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--borda);
+            color: var(--texto-secundario);
         }
 
-        /* Cores Intercaladas (Zebrado nas linhas) */
-        tr:nth-child(even) td {
-            background-color: rgba(255, 255, 255, 0.03);
-        }
-        tr:nth-child(odd) td {
-            background-color: transparent;
+        tr:hover td {
+            color: var(--texto-principal);
+            background-color: rgba(255, 255, 255, 0.01);
         }
 
-        tr:hover td { background-color: rgba(255,255,255,0.08) !important; }
-
-        /* Inputs Editáveis na Tabela */
-        .table-input {
-            background-color: var(--bg-input);
-            color: white;
-            border: 1px solid #2d3748;
-            padding: 6px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            width: 100%;
-            box-sizing: border-box;
-            outline: none;
-        }
-        .table-input:focus {
-            border-color: var(--vermelho-alerta);
-        }
-
-        /* Estilização dos Selects na Tabela */
-        .status-select {
-            background-color: transparent;
-            color: white;
-            border: 1px solid #4a5568;
-            padding: 6px;
+        /* Botões de Ação */
+        .btn-acao {
+            padding: 5px 10px;
             border-radius: 4px;
             font-size: 0.8rem;
-            font-weight: bold;
-            cursor: pointer;
-            outline: none;
-            width: 100%;
+            margin-right: 5px;
+            text-decoration: none;
+            display: inline-block;
         }
-        .status-select.programadas { background-color: rgba(46, 204, 113, 0.2); color: #2ecc71; border-color: #2ecc71; }
-        .status-select.sem-prog { background-color: rgba(231, 76, 60, 0.2); color: #e74c3c; border-color: #e74c3c; }
-        .status-select.conflito { background-color: var(--vermelho-alerta); color: white; border-color: var(--vermelho-alerta); }
 
-        /* Botão de Excluir */
-        .btn-delete {
-            background-color: transparent;
-            color: #ff6b6b;
-            border: 1px solid #ff6b6b;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
+        .btn-editar {
+            background: var(--bg-input);
+            color: var(--texto-principal);
+            border: 1px solid var(--borda);
         }
-        .btn-delete:hover {
-            background-color: var(--vermelho-alerta);
+        .btn-editar:hover { background: var(--borda); }
+
+        .btn-deletar {
+            background: var(--vermelho-suave);
+            color: var(--vermelho-primario);
+            border: 1px solid rgba(230, 57, 70, 0.2);
+        }
+        .btn-deletar:hover {
+            background: var(--vermelho-primario);
             color: white;
         }
 
-        /* Formulário */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--texto-mutado); }
-        .form-control {
-            width: 100%; padding: 10px; background-color: var(--bg-input);
-            border: 1px solid #2d3748; border-radius: 5px; color: white;
-            font-size: 0.9rem; box-sizing: border-box; outline: none;
-        }
-        .form-control:focus { border-color: var(--vermelho-alerta); }
-        .btn-submit {
-            width: 100%; padding: 12px; background-color: var(--vermelho-dark);
-            color: white; border: none; border-radius: 5px; font-size: 1rem;
-            font-weight: bold; cursor: pointer; transition: background 0.2s;
-        }
-        .btn-submit:hover { background-color: var(--vermelho-alerta); }
-
-        /* Tela de Calendário/Mensal */
-        .calendar-picker {
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .grid-tecnicos {
+        /* Calendário Mensal */
+        .calendario-mensal {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
             margin-top: 20px;
         }
-        .tecnico-item {
-            background: #252f3f;
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 4px solid var(--verde-status);
+
+        .card-mes {
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--borda);
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        .tecnico-item.conflito-card {
-            border-left-color: var(--vermelho-alerta);
+
+        .card-mes h4 {
+            color: var(--vermelho-primario);
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--borda);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-transform: capitalize;
         }
-        .tecnico-item p { margin: 4px 0; font-size: 0.9rem; }
+
+        .card-mes ul {
+            list-style: none;
+        }
+
+        .card-mes li {
+            font-size: 0.9rem;
+            padding: 6px 0;
+            color: var(--texto-secundario);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-mes li strong {
+            color: var(--texto-principal);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Novo Título Solicitado -->
-    <h1>CONTROLE DE FÉRIAS - REGIONAL AMPÉRE</h1>
-    
-    <!-- Novo Alerta: Técnicos terminando férias nos próximos dias -->
-    <div id="retornoFeriasAlerta" class="alert-box alert-info">
-        <h3>📅 TÉCNICOS RETORNANDO DE FÉRIAS EM BREVE (PRÓXIMOS 7 DIAS)</h3>
-        <ul id="listaRetornos"></ul>
-    </div>
+    <h1>Controle de Férias - Regional Ampére</h1>
 
-    <!-- Alerta de Conflitos -->
-    <div id="conflitoAlerta" class="alert-box alert-danger">
-        <h3>⚠️ ALERTA DE CONFLITO NA MESMA CIDADE DETECTADO!</h3>
-        <ul id="listaConflitos"></ul>
-    </div>
-
-    <!-- Menu das Abas -->
-    <div class="tabs-nav">
-        <button class="tab-btn active" onclick="mudarAba('escala')">Escala de Férias</button>
-        <button class="tab-btn" onclick="mudarAba('calendario')">Calendário de Férias por Mês</button>
-    </div>
-
-    <!-- ABA 1: ESCALA DE FÉRIAS -->
-    <div id="aba-escala" class="tab-content active">
-        <div class="main-layout">
-            <div class="card table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Ações</th>
-                            <th>Colaborador</th>
-                            <th>Cidade</th>
-                            <th>Período Aquisitivo</th>
-                            <th>Data de Admissão</th>
-                            <th>Dias Solicitados</th>
-                            <th>Limite para Início</th>
-                            <th>Início das Férias</th>
-                            <th>Fim das Férias</th>
-                            <th style="width: 160px;">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelaCorpo"></tbody>
-                </table>
-            </div>
-
-            <div class="card">
-                <h3 style="margin-top: 0; margin-bottom: 15px;">Adicionar Novo Técnico</h3>
-                <form id="formFerias" onsubmit="adicionarNovaFerias(event)">
-                    <div class="form-group"><label>Nome do Técnico</label><input type="text" id="nome" class="form-control" required placeholder="Ex: Jean"></div>
-                    <div class="form-group">
-                        <label>Cidade</label>
-                        <select id="cidade" class="form-control" required>
-                            <option value="Ampére">Ampére</option><option value="Realeza">Realeza</option><option value="Capanema">Capanema</option><option value="Capitão">Capitão</option><option value="Dois Vizinhos">Dois Vizinhos</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Período Aquisitivo</label><input type="text" id="perAquisitivo" class="form-control" placeholder="2025/2026"></div>
-                    <div class="form-group"><label>Data de Admissão</label><input type="date" id="dtAdmissao" class="form-control"></div>
-                    <div class="form-group"><label>Dias Solicitados</label><input type="number" id="diasSol" class="form-control" placeholder="30"></div>
-                    <div class="form-group"><label>Limite para Início</label><input type="date" id="dtLimite" class="form-control"></div>
-                    <div class="form-group"><label>Início das Férias</label><input type="date" id="inicio" class="form-control"></div>
-                    <div class="form-group"><label>Fim das Férias</label><input type="date" id="fim" class="form-control"></div>
-                    <button type="submit" class="btn-submit">Salvar na Lista</button>
-                </form>
-            </div>
+    <!-- Painel de Notificações Próximas -->
+    <div class="painel-alertas">
+        <div class="alerta-box retorno">
+            <h3>📅 Retornando em Breve (Próximos 7 Dias)</h3>
+            <ul id="lista-retornos"><!-- Inserido via JS --></ul>
+        </div>
+        <div class="alerta-box" style="border-left-color: var(--vermelho-primario);">
+            <h3>⚠️ Saindo em Breve (Próximos Dias)</h3>
+            <ul id="lista-saidas"><!-- Inserido via JS --></ul>
         </div>
     </div>
 
-    <!-- ABA 2: CALENDÁRIO MENSUAL -->
-    <div id="aba-calendario" class="tab-content">
-        <div class="card">
-            <div class="calendar-picker">
-                <label style="font-weight: bold; font-size: 1.1rem;">Selecione o Mês e Ano para Consulta:</label>
-                <input type="month" id="filtroMesAno" class="form-control" style="width: 250px;" onchange="filtrarPorMes()">
+    <!-- Formulário de Cadastro -->
+    <h2>Escala de Férias</h2>
+    <div class="form-cadastro">
+        <form id="form-tecnico" onsubmit="salvarTecnico(event)">
+            <input type="hidden" id="edit-index" value="">
+            <div class="grid-form">
+                <div class="form-group">
+                    <label for="colaborador">Colaborador</label>
+                    <input type="text" id="colaborador" required placeholder="Nome do técnico">
+                </div>
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" id="cidade" required placeholder="Cidade de atuação">
+                </div>
+                <div class="form-group">
+                    <label for="periodo">Período Aquisitivo</label>
+                    <input type="text" id="periodo" value="2025/2026" required>
+                </div>
+                <div class="form-group">
+                    <label for="dias">Dias</label>
+                    <input type="number" id="dias" required min="1" placeholder="Ex: 15">
+                </div>
+                <div class="form-group">
+                    <label for="inicio">Início</label>
+                    <input type="date" id="inicio" required>
+                </div>
+                <div class="form-group">
+                    <label for="fim">Fim</label>
+                    <input type="date" id="fim" required>
+                </div>
+                <button type="submit" id="btn-salvar">Adicionar Técnico</button>
             </div>
-            
-            <h2 id="tituloCalendario" style="font-size: 1.3rem; color: var(--texto-mutado); border-bottom: 1px solid #2d3748; padding-bottom: 10px;">Técnicos de Férias em:</h2>
-            <div id="containerCalendario" class="grid-tecnicos"></div>
-        </div>
+        </form>
+    </div>
+
+    <!-- Tabela de Dados -->
+    <div class="tabela-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Colaborador</th>
+                    <th>Cidade</th>
+                    <th>Período Aquisitivo</th>
+                    <th>Dias</th>
+                    <th>Início das Férias</th>
+                    <th>Fim das Férias</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-corpo">
+                <!-- Inserido via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Calendário Agrupado por Mês -->
+    <h2>Calendário de Férias por Mês</h2>
+    <div class="calendario-mensal" id="calendario-meses">
+        <!-- Inserido via JS -->
     </div>
 </div>
 
 <script>
-    // Base de dados de técnicos conforme planilha
+    // Dados Iniciais Baseados no Print Atual
     let tecnicos = [
-        { nome: "Valdenor", cidade: "Ampére", aquisitivo: "2025/2026", admissao: "2020-09-21", dias: "14", limite: "2026-09-01", inicio: "2026-07-16", fim: "2026-07-29", statusManual: "" },
-        { nome: "Ederson", cidade: "Ampére", aquisitivo: "2025/2026", admissao: "2021-06-23", dias: "15", limite: "2026-06-08", inicio: "2026-05-26", fim: "2026-06-10", statusManual: "" },
-        { nome: "Marcos", cidade: "Ampére", aquisitivo: "2025/2026", admissao: "2020-03-02", dias: "15", limite: "2027-02-02", inicio: "2027-01-04", fim: "2027-01-18", statusManual: "" },
-        { nome: "Mateus", cidade: "Ampére", aquisitivo: "2025/2026", admissao: "2025-10-20", dias: "", limite: "2026-09-20", inicio: "", fim: "", statusManual: "" },
-        { nome: "Guilherme", cidade: "Ampére", aquisitivo: "2025/2026", admissao: "2023-09-25", dias: "20", limite: "2026-08-25", inicio: "2026-06-15", fim: "2026-07-04", statusManual: "" },
-        { nome: "Wellinton", cidade: "Ampére", aquisitivo: "2025/2026", admissao: "2026-05-18", dias: "", limite: "2027-04-18", inicio: "", fim: "", statusManual: "" },
-        { nome: "Serginho", cidade: "Realeza", aquisitivo: "2025/2026", admissao: "2022-12-21", dias: "10", limite: "2026-11-21", inicio: "2026-05-25", fim: "2026-06-03", statusManual: "" },
-        { nome: "Alessandro", cidade: "Realeza", aquisitivo: "2025/2026", admissao: "2023-06-12", dias: "15", limite: "2026-12-05", inicio: "2026-12-17", fim: "2027-01-05", statusManual: "" },
-        { nome: "Tiago", cidade: "Realeza", aquisitivo: "2025/2026", admissao: "2016-01-14", dias: "30", limite: "2026-12-14", inicio: "2027-01-11", fim: "2027-02-09", statusManual: "" },
-        { nome: "Kauan", cidade: "Realeza", aquisitivo: "2025/2026", admissao: "2026-05-18", dias: "", limite: "2027-04-18", inicio: "", fim: "", statusManual: "" },
-        { nome: "Vinicios", cidade: "Capanema", aquisitivo: "2025/2026", admissao: "2025-10-06", dias: "15", limite: "2026-06-09", inicio: "2026-12-22", fim: "2027-01-05", statusManual: "" },
-        { nome: "Odair", cidade: "Capanema", aquisitivo: "2025/2026", admissao: "2026-01-07", dias: "20", limite: "2026-07-12", inicio: "2026-07-22", fim: "2026-08-13", statusManual: "" },
-        { nome: "Rodrigo", cidade: "Capitão", aquisitivo: "2025/2026", admissao: "2022-03-28", dias: "20", limite: "2027-12-28", inicio: "2027-02-01", fim: "2027-02-20", statusManual: "" },
-        { nome: "Renan", cidade: "Capitão", aquisitivo: "2025/2026", admissao: "2023-02-22", dias: "20", limite: "2027-01-22", inicio: "2027-01-04", fim: "2027-01-23", statusManual: "" },
-        { nome: "Samuel", cidade: "Dois Vizinhos", aquisitivo: "2025/2026", admissao: "2024-09-02", dias: "5", limite: "2026-08-28", inicio: "2026-08-03", fim: "2026-08-07", statusManual: "" },
-        { nome: "Cleverson", cidade: "Dois Vizinhos", aquisitivo: "2025/2026", admissao: "2022-08-08", dias: "10", limite: "2026-07-29", inicio: "2026-07-15", fim: "2026-07-24", statusManual: "" },
-        { nome: "Marcio", cidade: "Dois Vizinhos", aquisitivo: "2025/2026", admissao: "2019-06-21", dias: "20", limite: "2026-05-21", inicio: "2026-12-21", fim: "2027-01-04", statusManual: "" },
-        { nome: "Renan Tartari", cidade: "Dois Vizinhos", aquisitivo: "2025/2026", admissao: "2026-04-06", dias: "", limite: "2027-03-06", inicio: "", fim: "", statusManual: "" },
-        { nome: "Edson", cidade: "Dois Vizinhos", aquisitivo: "2025/2026", admissao: "2026-04-27", dias: "", limite: "2027-03-27", inicio: "", fim: "", statusManual: "" }
+        { colaborador: "Ederson", cidade: "Ampére", periodo: "2025/2026", dias: 15, inicio: "2026-05-26", fim: "2026-06-10" },
+        { colaborador: "Guilherme", cidade: "Ampére", periodo: "2025/2026", dias: 20, inicio: "2026-06-15", fim: "2026-07-04" },
+        { colaborador: "Valdenor", cidade: "Ampére", periodo: "2025/2026", dias: 14, inicio: "2026-07-16", fim: "2026-07-29" },
+        { colaborador: "Marcos", cidade: "Ampére", periodo: "2025/2026", dias: 15, inicio: "2027-01-04", fim: "2027-01-18" },
+        { colaborador: "Odair", cidade: "Capanema", periodo: "2025/2026", dias: 20, inicio: "2026-07-22", fim: "2026-08-13" },
+        { colaborador: "Vinicios", cidade: "Capanema", periodo: "2025/2026", dias: 15, inicio: "2026-12-22", fim: "2027-01-05" },
+        { colaborador: "Renan", cidade: "Capitão", periodo: "2025/2026", dias: 20, inicio: "2027-01-04", fim: "2027-01-23" },
+        { colaborador: "Rodrigo", cidade: "Capitão", periodo: "2025/2026", dias: 20, inicio: "2027-02-01", fim: "2027-02-20" },
+        { colaborador: "Cleverson", cidade: "Dois Vizinhos", periodo: "2025/2026", dias: 10, inicio: "2026-07-15", fim: "2026-07-24" },
+        { colaborador: "Samuel", cidade: "Dois Vizinhos", periodo: "2025/2026", dias: 5, inicio: "2026-08-03", fim: "2026-08-07" },
+        { colaborador: "Marcio", cidade: "Dois Vizinhos", periodo: "2025/2026", dias: 20, inicio: "2026-12-21", fim: "2027-01-04" },
+        { colaborador: "Serginho", cidade: "Realeza", periodo: "2025/2026", dias: 10, inicio: "2026-05-25", fim: "2026-06-03" },
+        { colaborador: "Alessandro", cidade: "Realeza", periodo: "2025/2026", dias: 15, inicio: "2026-12-17", fim: "2027-01-05" },
+        { colaborador: "Tiago", cidade: "Realeza", periodo: "2025/2026", dias: 30, inicio: "2027-01-11", fim: "2027-02-09" }
     ];
 
-    let listaGlobalConflitos = new Set();
+    const hoje = new Date("2026-07-01"); // Data Fixa de Contexto da sua aplicação (01/07/2026)
 
     function formatarDataBR(dataString) {
-        if (!dataString) return "-";
-        const [ano, mes, dia] = dataString.split('-');
-        return `${dia}/${mes}/${ano}`;
+        const d = new Date(dataString + "T00:00:00");
+        return d.toLocaleDateString('pt-BR');
     }
 
-    function mudarAba(aba) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        
-        if(aba === 'escala') {
-            document.querySelector('[onclick="mudarAba(\'escala\')"]').classList.add('active');
-            document.getElementById('aba-escala').classList.add('active');
-        } else {
-            document.querySelector('[onclick="mudarAba(\'calendario\')"]').classList.add('active');
-            document.getElementById('aba-calendario').classList.add('active');
-            filtrarPorMes();
-        }
-    }
-
-    // Alerta de Férias finalizando nos próximos dias
-    function analisarRetornoDeFerias() {
-        const hoje = new Date();
-        hoje.setHours(0,0,0,0);
-        
-        const limiteFuturo = new Date();
-        limiteFuturo.setDate(hoje.getDate() + 7);
-        limiteFuturo.setHours(23,59,59,999);
-
-        let retornosBreve = [];
-
-        tecnicos.forEach(t => {
-            if(t.fim) {
-                const dataFim = new Date(t.fim + 'T00:00:00');
-                // Se o término está entre hoje e os próximos 7 dias
-                if (dataFim >= hoje && dataFim <= limiteFuturo) {
-                    const diasRestantes = Math.ceil((dataFim - hoje) / (1000 * 60 * 60 * 24));
-                    retornosBreve.push(`O técnico <strong>${t.nome}</strong> (${t.cidade}) encerra as férias em <strong>${formatarDataBR(t.fim)}</strong> (Falta(m) ${diasRestantes} dia(s)).`);
-                }
-            }
+    // Regra Solicitada: Ordenar estritamente por Ordem Alfabética de Cidade
+    function ordenarPorCidade() {
+        tecnicos.sort((a, b) => {
+            let cidadeA = a.cidade.toLowerCase();
+            let cidadeB = b.cidade.toLowerCase();
+            if (cidadeA < cidadeB) return -1;
+            if (cidadeA > cidadeB) return 1;
+            
+            // Se as cidades forem iguais, ordena por colaborador
+            let nomeA = a.colaborador.toLowerCase();
+            let nomeB = b.colaborador.toLowerCase();
+            return nomeA.localeCompare(nomeB);
         });
-
-        const boxInfo = document.getElementById('retornoFeriasAlerta');
-        const lista = document.getElementById('listaRetornos');
-        lista.innerHTML = "";
-
-        if(retornosBreve.length > 0) {
-            boxInfo.style.display = "block";
-            retornosBreve.forEach(r => { lista.innerHTML += `<li>${r}</li>`; });
-        } else {
-            boxInfo.style.display = "none";
-        }
     }
 
-    function analisarConflitos() {
-        let conflitos = [];
-        listaGlobalConflitos.clear();
-
-        for (let i = 0; i < tecnicos.length; i++) {
-            for (let j = i + 1; j < tecnicos.length; j++) {
-                const t1 = tecnicos[i];
-                const t2 = tecnicos[j];
-
-                if (t1.cidade === t2.cidade && t1.inicio && t1.fim && t2.inicio && t2.fim) {
-                    const s1 = new Date(t1.inicio + 'T00:00:00');
-                    const e1 = new Date(t1.fim + 'T00:00:00');
-                    const s2 = new Date(t2.inicio + 'T00:00:00');
-                    const e2 = new Date(t2.fim + 'T00:00:00');
-
-                    if (s1 <= e2 && s2 <= e1) {
-                        listaGlobalConflitos.add(t1.nome);
-                        listaGlobalConflitos.add(t2.nome);
-                        conflitos.push(`Conflito em <strong>${t1.cidade}</strong>: <strong>${t1.nome}</strong> e <strong>${t2.nome}</strong> coincidem de ${formatarDataBR(t1.inicio)} a ${formatarDataBR(t1.fim)}.`);
-                    }
-                }
-            }
-        }
-
-        const alertaBox = document.getElementById('conflitoAlerta');
-        const lista = document.getElementById('listaConflitos');
-        lista.innerHTML = "";
-        if (conflitos.length > 0) {
-            alertaBox.style.display = 'block';
-            conflitos.forEach(c => { lista.innerHTML += `<li>${c}</li>`; });
-        } else {
-            alertaBox.style.display = 'none';
-        }
+    function renderizarTudo() {
+        ordenarPorCidade();
+        renderizarTabela();
+        renderizarAlertas();
+        renderizarCalendarioMeses();
     }
 
     function renderizarTabela() {
-        const corpo = document.getElementById('tabelaCorpo');
+        const corpo = document.getElementById("tabela-corpo");
         corpo.innerHTML = "";
 
-        tecnicos.forEach((t, idx) => {
-            let classeSelect = "sem-prog";
-            let valorSelect = t.statusManual || "Sem Programação";
-
-            if (listaGlobalConflitos.has(t.nome)) {
-                classeSelect = "conflito";
-                valorSelect = "Em Conflito";
-            } else if (t.inicio && t.fim) {
-                if(!t.statusManual || t.statusManual === "Sem Programação" || t.statusManual === "Em Conflito") {
-                    valorSelect = "Férias Programadas";
-                }
-                classeSelect = "programadas";
-            } else {
-                valorSelect = "Sem Programação";
-                classeSelect = "sem-prog";
-            }
-
-            const linha = `<tr>
-                <td style="text-align:center;"><button class="btn-delete" onclick="excluirTecnico(${idx})">🗑️</button></td>
-                <td><strong>${t.nome}</strong></td>
+        tecnicos.forEach((t, index) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><strong>${t.colaborador}</strong></td>
                 <td>${t.cidade}</td>
-                <td><input type="text" class="table-input" value="${t.aquisitivo}" onchange="atualizarCampo(${idx}, 'aquisitivo', this.value)"></td>
-                <td>${formatarDataBR(t.admissao)}</td>
-                <td><input type="number" class="table-input" value="${t.dias}" onchange="atualizarCampo(${idx}, 'dias', this.value)"></td>
-                <td><input type="date" class="table-input" value="${t.limite}" onchange="atualizarCampo(${idx}, 'limite', this.value)"></td>
-                <td><input type="date" class="table-input" value="${t.inicio}" onchange="atualizarCampo(${idx}, 'inicio', this.value)"></td>
-                <td><input type="date" class="table-input" value="${t.fim}" onchange="atualizarCampo(${idx}, 'fim', this.value)"></td>
+                <td>${t.periodo}</td>
+                <td>${t.dias}</td>
+                <td>${formatarDataBR(t.inicio)}</td>
+                <td>${formatarDataBR(t.fim)}</td>
                 <td>
-                    <select class="status-select ${classeSelect}" onchange="alterarStatusManual(${idx}, this.value)">
-                        <option value="Sem Programação" ${valorSelect === 'Sem Programação'?'selected':''}>Sem Programação</option>
-                        <option value="Férias Programadas" ${valorSelect === 'Férias Programadas'?'selected':''}>Férias Programadas</option>
-                        ${valorSelect === 'Em Conflito' ? `<option value="Em Conflito" selected>Em Conflito</option>` : ''}
-                    </select>
+                    <button class="btn-acao btn-editar" onclick="editarTecnico(${index})">Editar</button>
+                    <button class="btn-acao btn-deletar" onclick="deletarTecnico(${index})">Deletar</button>
                 </td>
-            </tr>`;
-            corpo.innerHTML += linha;
+            `;
+            corpo.appendChild(tr);
         });
     }
 
-    function atualizarCampo(index, campo, valor) {
-        tecnicos[index][campo] = valor;
-        processarTudo();
-    }
+    function renderizarAlertas() {
+        const listaRetornos = document.getElementById("lista-retornos");
+        const listaSaidas = document.getElementById("lista-saidas");
+        listaRetornos.innerHTML = "";
+        listaSaidas.innerHTML = "";
 
-    function alterarStatusManual(index, valor) {
-        tecnicos[index].statusManual = valor;
-        processarTudo();
-    }
-
-    function excluirTecnico(index) {
-        if(confirm(`Tem certeza que deseja remover ${tecnicos[index].nome} do controle de férias?`)) {
-            tecnicos.splice(index, 1);
-            processarTudo();
-        }
-    }
-
-    function filtrarPorMes() {
-        const inputMes = document.getElementById('filtroMesAno').value;
-        const container = document.getElementById('containerCalendario');
-        const titulo = document.getElementById('tituloCalendario');
-        container.innerHTML = "";
-
-        if(!inputMes) {
-            titulo.innerText = "Escolha um mês para verificar a escala ativa.";
-            return;
-        }
-
-        const [anoAlvo, mesAlvo] = inputMes.split('-').map(Number);
-        const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        titulo.innerText = `Técnicos de Férias em: ${mesesNomes[mesAlvo-1]} de ${anoAlvo}`;
-
-        let quemEstaDeFerias = [];
+        let encontrouRetorno = false;
+        let encontrouSaida = false;
 
         tecnicos.forEach(t => {
-            if(t.inicio && t.fim) {
-                const dataInicio = new Date(t.inicio + 'T00:00:00');
-                const dataFim = new Date(t.fim + 'T00:00:00');
-                
-                const dataFiltroInicio = new Date(anoAlvo, mesAlvo - 1, 1);
-                const dataFiltroFim = new Date(anoAlvo, mesAlvo, 0);
+            const dataInicio = new Date(t.inicio + "T00:00:00");
+            const dataFim = new Date(t.fim + "T00:00:00");
 
-                if(dataInicio <= dataFiltroFim && dataFim >= dataFiltroInicio) {
-                    quemEstaDeFerias.push(t);
-                }
+            // Diferença em dias
+            const diffRetorno = Math.ceil((dataFim - hoje) / (1000 * 60 * 60 * 24));
+            const diffSaida = Math.ceil((dataInicio - hoje) / (1000 * 60 * 60 * 24));
+
+            // Retornando de férias nos próximos 7 dias (ou hoje)
+            if (diffRetorno >= 0 && diffRetorno <= 7) {
+                encontrouRetorno = true;
+                const li = document.createElement("li");
+                li.innerHTML = `O técnico <strong>${t.colaborador}</strong> (${t.cidade}) encerra as férias em <strong>${formatarDataBR(t.fim)}</strong> (Falta(m) ${diffRetorno} dia(s)).`;
+                listaRetornos.appendChild(li);
+            }
+
+            // Saindo de férias em breve (próximos 30 dias a partir de hoje)
+            if (diffSaida > 0 && diffSaida <= 30) {
+                encontrouSaida = true;
+                const li = document.createElement("li");
+                li.innerHTML = `O técnico <strong>${t.colaborador}</strong> (${t.cidade}) inicia as férias em <strong>${formatarDataBR(t.inicio)}</strong> (Em ${diffSaida} dias).`;
+                listaSaidas.appendChild(li);
             }
         });
 
-        if(quemEstaDeFerias.length === 0) {
-            container.innerHTML = `<p style="color: var(--texto-mutado); grid-column: 1/-1;">Nenhum técnico com férias agendadas neste mês.</p>`;
-            return;
-        }
+        if(!encontrouRetorno) listaRetornos.innerHTML = "<li>Nenhum técnico retornando nos próximos 7 dias.</li>";
+        if(!encontrouSaida) listaSaidas.innerHTML = "<li>Nenhum técnico saindo de férias nos próximos dias.</li>";
+    }
 
-        quemEstaDeFerias.forEach(t => {
-            const ehConflito = listaGlobalConflitos.has(t.nome);
-            const card = `<div class="tecnico-item ${ehConflito ? 'conflito-card' : ''}">
-                <p><strong>${t.nome}</strong></p>
-                <p style="color: var(--texto-mutado); font-size:0.8rem;">Cidade: ${t.cidade}</p>
-                <p style="font-size: 0.8rem; margin-top:8px;">Período:</p>
-                <p style="color: #64ffda; font-size:0.8rem;">${formatarDataBR(t.inicio)} até ${formatarDataBR(t.fim)}</p>
-            </div>`;
-            container.innerHTML += card;
+    function renderizarCalendarioMeses() {
+        const container = document.getElementById("calendario-meses");
+        container.innerHTML = "";
+
+        const mesesNome = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        let mapeamento = {};
+
+        tecnicos.forEach(t => {
+            let start = new Date(t.inicio + "T00:00:00");
+            let end = new Date(t.fim + "T00:00:00");
+
+            let atual = new Date(start.getFullYear(), start.getMonth(), 1);
+            while (atual <= end) {
+                let chaveAnoMes = `${atual.getFullYear()}-${String(atual.getMonth() + 1).padStart(2, '0')}`;
+                if (!mapeamento[chaveAnoMes]) mapeamento[chaveAnoMes] = [];
+                mapeamento[chaveAnoMes].push(t);
+                
+                atual.setMonth(atual.getMonth() + 1);
+            }
+        });
+
+        const chavesOrdenadas = Object.keys(mapeamento).sort();
+
+        chavesOrdenadas.forEach(chave => {
+            const [ano, mesNum] = chave.split("-");
+            const nomeMes = mesesNome[parseInt(mesNum) - 1];
+
+            const cardMes = document.createElement("div");
+            cardMes.className = "card-mes";
+            cardMes.innerHTML = `<h4>${nomeMes} / ${ano}</h4><ul id="lista-${chave}"></ul>`;
+            
+            const ul = cardMes.querySelector("ul");
+
+            // O mapeamento herda a ordenação por cidades prévia dos técnicos
+            mapeamento[chave].forEach(t => {
+                const li = document.createElement("li");
+                li.innerHTML = `<span>• <strong>${t.colaborador}</strong> (${t.cidade})</span>
+                                <small style="color: var(--texto-secundario)">${formatarDataBR(t.inicio)} a ${formatarDataBR(t.fim)}</small>`;
+                ul.appendChild(li);
+            });
+
+            container.appendChild(cardMes);
         });
     }
 
-    function adicionarNovaFerias(event) {
-        event.preventDefault();
-        const nome = document.getElementById('nome').value;
-
-        const dados = {
-            nome: nome,
-            cidade: document.getElementById('cidade').value,
-            aquisitivo: document.getElementById('perAquisitivo').value,
-            admissao: document.getElementById('dtAdmissao').value,
-            dias: document.getElementById('diasSol').value,
-            limite: document.getElementById('dtLimite').value,
-            inicio: document.getElementById('inicio').value,
-            fim: document.getElementById('fim').value,
-            statusManual: ""
+    function salvarTecnico(e) {
+        e.preventDefault();
+        
+        const index = document.getElementById("edit-index").value;
+        const novoTecnico = {
+            colaborador: document.getElementById("colaborador").value,
+            cidade: document.getElementById("cidade").value,
+            periodo: document.getElementById("periodo").value,
+            dias: parseInt(document.getElementById("dias").value),
+            inicio: document.getElementById("inicio").value,
+            fim: document.getElementById("fim").value
         };
 
-        tecnicos.push(dados);
-        processarTudo();
-        document.getElementById('formFerias').reset();
+        if (index === "") {
+            tecnicos.push(novoTecnico);
+        } else {
+            tecnicos[index] = novoTecnico;
+            document.getElementById("edit-index").value = "";
+            document.getElementById("btn-salvar").innerText = "Adicionar Técnico";
+        }
+
+        document.getElementById("form-tecnico").reset();
+        document.getElementById("periodo").value = "2025/2026";
+        
+        renderizarTudo();
     }
 
-    function definirMesAtualPadrao() {
-        const hoje = new Date();
-        const ano = hoje.getFullYear();
-        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-        document.getElementById('filtroMesAno').value = `${ano}-${mes}`;
+    function editarTecnico(index) {
+        const t = tecnicos[index];
+        document.getElementById("colaborador").value = t.colaborador;
+        document.getElementById("cidade").value = t.cidade;
+        document.getElementById("periodo").value = t.periodo;
+        document.getElementById("dias").value = t.dias;
+        document.getElementById("inicio").value = t.inicio;
+        document.getElementById("fim").value = t.fim;
+        
+        document.getElementById("edit-index").value = index;
+        document.getElementById("btn-salvar").innerText = "Atualizar Técnico";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function processarTudo() {
-        analisarRetornoDeFerias();
-        analisarConflitos();
-        renderizarTabela();
-        filtrarPorMes();
+    function deletarTecnico(index) {
+        if(confirm("Deseja realmente remover este técnico da escala?")) {
+            tecnicos.splice(index, 1);
+            renderizarTudo();
+        }
     }
 
-    window.onload = function() {
-        definirMesAtualPadrao();
-        processarTudo();
-    };
+    // Inicialização do Sistema
+    renderizarTudo();
 </script>
 
 </body>
