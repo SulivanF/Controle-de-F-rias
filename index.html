@@ -4,591 +4,644 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Férias - Regional Ampére</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-principal: #0d0d11;
-            --bg-card: #16161a;
-            --bg-input: #22222b;
-            --texto-principal: #ffffff;
-            --texto-secundario: #a0a0b0;
-            --vermelho-primario: #e63946;
-            --vermelho-hover: #ff4d5a;
-            --vermelho-suave: rgba(230, 57, 70, 0.1);
-            --borda: #2a2a35;
-            --sucesso: #2ec4b6;
-            --alerta: #ff9f1c;
-            --alerta-suave: rgba(255, 159, 28, 0.1);
+            --bg-color: #121214;
+            --card-bg: #1a1a1e;
+            --text-color: #ffffff;
+            --text-secondary: #a8a8b3;
+            --primary-color: #e51c44;
+            --border-color: #29292e;
+            --info-color: #4cd62b;
+            --warning-color: #f7b500;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+
         body {
-            background-color: var(--bg-principal);
-            color: var(--texto-principal);
-            padding: 40px 20px;
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
+
+        header {
             text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 2rem;
-            margin-bottom: 40px;
-            color: var(--texto-principal);
-            border-bottom: 3px solid var(--vermelho-primario);
-            padding-bottom: 15px;
-            display: inline-block;
-            width: 100%;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
-        h2 {
-            font-size: 1.4rem;
-            margin: 35px 0 20px 0;
-            color: var(--texto-principal);
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid transparent;
+        }
+
+        .card.info { border-left-color: #3388ff; }
+        .card.warning { border-left-color: var(--warning-color); }
+
+        .card h3 {
+            margin-top: 0;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
         }
-        /* Alertas de Férias */
-        .painel-alertas {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .alerta-conflito-container {
-            margin-bottom: 20px;
-        }
-        @media (max-width: 768px) {
-            .painel-alertas {
-                grid-template-columns: 1fr;
-            }
-        }
-        .alerta-box {
-            background: var(--bg-card);
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 4px solid var(--vermelho-primario);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        .alerta-box.retorno {
-            border-left-color: var(--sucesso);
-        }
-        .alerta-box.saida {
-            border-left-color: var(--vermelho-primario);
-        }
-        .alerta-box.conflito {
-            border-left-color: var(--alerta);
-            background: var(--bg-card);
-        }
-        .alerta-box h3 {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .alerta-box ul {
+
+        .card ul {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
-        .alerta-box li {
-            padding: 8px 0;
-            border-bottom: 1px solid var(--borda);
+
+        .card li {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
             font-size: 0.95rem;
-            color: var(--texto-secundario);
         }
-        .alerta-box li:last-child {
-            border-bottom: none;
+
+        .card li:last-child {
+            margin-bottom: 0;
         }
-        .alerta-box strong {
-            color: var(--texto-principal);
+
+        .card strong {
+            color: var(--text-color);
         }
-        /* Formulário */
-        .form-cadastro {
-            background: var(--bg-card);
-            padding: 25px;
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            background-color: var(--card-bg);
+            padding: 20px;
             border-radius: 8px;
-            border: 1px solid var(--borda);
-            margin-bottom: 40px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
         }
-        .grid-form {
+
+        .inputs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
-            align-items: flex-end;
+            margin-bottom: 15px;
         }
-        .form-group {
+
+        .input-field {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 5px;
         }
-        .form-group label {
-            font-size: 0.85rem;
-            color: var(--texto-secundario);
+
+        .input-field label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        .form-group input, .form-group select {
-            background: var(--bg-input);
-            border: 1px solid var(--borda);
-            color: var(--texto-principal);
-            padding: 10px 12px;
-            border-radius: 5px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s;
-        }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--vermelho-primario);
-            box-shadow: 0 0 0 2px var(--vermelho-suave);
-        }
-        btn, button, .btn-submit {
-            background: var(--vermelho-primario);
-            color: white;
-            border: none;
-            padding: 11px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background 0.2s;
+
+        .input-field input {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px;
+            border-radius: 4px;
             font-size: 0.9rem;
         }
-        btn:hover, button:hover, .btn-submit:hover {
-            background: var(--vermelho-hover);
+
+        .btn-add {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
-        /* Tabela */
-        .tabela-container {
-            background: var(--bg-card);
-            border-radius: 8px;
+
+        .table-container {
             overflow-x: auto;
-            border: 1px solid var(--borda);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
             text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: rgba(0,0,0,0.2);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
             font-size: 0.95rem;
         }
-        th {
-            background-color: rgba(255, 255, 255, 0.02);
-            color: var(--texto-principal);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            padding: 16px;
-            border-bottom: 2px solid var(--borda);
-        }
-        td {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--borda);
-            color: var(--texto-secundario);
-        }
-        tr:hover td {
-            color: var(--texto-principal);
-            background-color: rgba(255, 255, 255, 0.01);
-        }
-        /* Botões de Ação */
-        .btn-acao {
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-right: 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn-editar {
-            background: var(--bg-input);
-            color: var(--texto-principal);
-            border: 1px solid var(--borda);
-        }
-        .btn-editar:hover {
-            background: var(--borda);
-        }
-        .btn-deletar {
-            background: var(--vermelho-suave);
-            color: var(--vermelho-primario);
-            border: 1px solid rgba(230, 57, 70, 0.2);
-        }
-        .btn-deletar:hover {
-            background: var(--vermelho-primario);
+
+        .btn-action {
+            background-color: var(--primary-color);
             color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.75rem;
+            margin-right: 5px;
+            text-transform: uppercase;
         }
-        /* Calendário Mensal */
-        .calendario-mensal {
+
+        .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 20px;
         }
-        .card-mes {
-            background: var(--bg-card);
+
+        .month-card {
+            background-color: var(--card-bg);
             border-radius: 8px;
-            border: 1px solid var(--borda);
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
         }
-        .card-mes h4 {
-            color: var(--vermelho-primario);
-            font-size: 1.1rem;
-            border-bottom: 1px solid var(--borda);
-            padding-bottom: 10px;
+
+        .month-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
             margin-bottom: 15px;
-            text-transform: capitalize;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(229, 28, 68, 0.2);
+            padding-bottom: 5px;
         }
-        .card-mes ul {
+
+        .month-card ul {
             list-style: none;
+            padding-left: 0;
+            margin: 0;
         }
-        .card-mes li {
-            font-size: 0.9rem;
-            padding: 6px 0;
-            color: var(--texto-secundario);
-            display: flex;
-            flex-direction: column;
-        }
-        .card-mes li strong {
-            color: var(--texto-principal);
+
+        .month-card li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Controle de Férias - Regional Ampére</h1>
 
-        <!-- Painel de Alerta de Conflitos (Mesma Cidade) -->
-        <div id="painel-conflitos-container" class="alerta-conflito-container" style="display: none;">
-            <div class="alerta-box conflito">
-                <h3>⚠️ Alerta de Coincidência de Férias (Mesma Cidade)</h3>
-                <ul id="lista-conflitos"></ul>
+    <header>
+        <h1>CONTROLE DE FÉRIAS - REGIONAL AMPÉRE</h1>
+    </header>
+
+    <div class="dashboard">
+        <!-- Bloco de Retorno -->
+        <div class="card info">
+            <h3>📅 RETORNANDO EM BREVE (PRÓXIMOS 7 DIAS)</h3>
+            <ul id="retorno-list">
+                <!-- Preenchido dinamicamente pelo JavaScript -->
+            </ul>
+        </div>
+
+        <!-- Bloco de Saída -->
+        <div class="card warning">
+            <h3>⚠️ SAINDO EM BREVE (PRÓXIMOS DIAS)</h3>
+            <ul id="saida-list">
+                <!-- Preenchido dinamicamente pelo JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="section-title">Escala de Férias</h2>
+    
+    <div class="form-group">
+        <div class="inputs-grid">
+            <div class="input-field">
+                <label>Colaborador</label>
+                <input type="text" id="input-colaborador" placeholder="Nome do técnico">
+            </div>
+            <div class="input-field">
+                <label>Cidade</label>
+                <input type="text" id="input-cidade" placeholder="Cidade de atuação">
+            </div>
+            <div class="input-field">
+                <label>Período Aquisitivo</label>
+                <input type="text" id="input-periodo" value="2025/2026">
+            </div>
+            <div class="input-field">
+                <label>Dias</label>
+                <input type="text" id="input-dias" placeholder="Ex: 15">
+            </div>
+            <div class="input-field">
+                <label>Início</label>
+                <input type="date" id="input-inicio">
+            </div>
+            <div class="input-field">
+                <label>Fim</label>
+                <input type="date" id="input-fim">
             </div>
         </div>
+        <button class="btn-add" id="btn-salvar">Adicionar Técnico</button>
+    </div>
 
-        <!-- Painel de Notificações Próximas -->
-        <div class="painel-alertas">
-            <div class="alerta-box retorno">
-                <h3>📅 Retornando em Breve (Próximos 7 Dias)</h3>
-                <ul id="lista-retornos"><!-- Inserido via JS --></ul>
-            </div>
-            <div class="alerta-box saida">
-                <h3>⚠️ Saindo em Breve (Próximos Dias)</h3>
-                <ul id="lista-saidas"><!-- Inserido via JS --></ul>
-            </div>
+    <div class="table-container">
+        <table id="escala-tabela">
+            <thead>
+                <tr>
+                    <th>Colaborador</th>
+                    <th>Cidade</th>
+                    <th>Período Aquisitivo</th>
+                    <th>Dias</th>
+                    <th>Início das Férias</th>
+                    <th>Fim das Férias</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Ederson</strong></td>
+                    <td>Ampére</td>
+                    <td>2025/2026</td>
+                    <td>15</td>
+                    <td>26/05/2026</td>
+                    <td>10/06/2026</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Guilherme</strong></td>
+                    <td>Ampére</td>
+                    <td>2025/2026</td>
+                    <td>20</td>
+                    <td>15/06/2026</td>
+                    <td>04/07/2026</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Marcos</strong></td>
+                    <td>Ampére</td>
+                    <td>2025/2026</td>
+                    <td>15</td>
+                    <td>04/01/2027</td>
+                    <td>18/01/2027</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Valdenor</strong></td>
+                    <td>Ampére</td>
+                    <td>2025/2026</td>
+                    <td>14</td>
+                    <td>16/07/2026</td>
+                    <td>29/07/2026</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Odair</strong></td>
+                    <td>Capanema</td>
+                    <td>2025/2026</td>
+                    <td>20</td>
+                    <td>22/07/2026</td>
+                    <td>13/08/2026</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Vinicios</strong></td>
+                    <td>Capanema</td>
+                    <td>2025/2026</td>
+                    <td>15</td>
+                    <td>22/12/2026</td>
+                    <td>05/01/2027</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Renan</strong></td>
+                    <td>Capitão</td>
+                    <td>2025/2026</td>
+                    <td>20</td>
+                    <td>04/01/2027</td>
+                    <td>23/01/2027</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Rodrigo</strong></td>
+                    <td>Capitão</td>
+                    <td>2025/2026</td>
+                    <td>20</td>
+                    <td>01/02/2027</td>
+                    <td>20/02/2027</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Cleverson</strong></td>
+                    <td>Dois Vizinhos</td>
+                    <td>2025/2026</td>
+                    <td>10</td>
+                    <td>15/07/2026</td>
+                    <td>24/07/2026</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Marcio</strong></td>
+                    <td>Dois Vizinhos</td>
+                    <td>2025/2026</td>
+                    <td>20</td>
+                    <td>21/12/2026</td>
+                    <td>04/01/2027</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Samuel</strong></td>
+                    <td>Dois Vizinhos</td>
+                    <td>2025/2026</td>
+                    <td>5</td>
+                    <td>03/08/2026</td>
+                    <td>07/08/2026</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Alessandro</strong></td>
+                    <td>Realeza</td>
+                    <td>2025/2026</td>
+                    <td>15</td>
+                    <td>17/12/2026</td>
+                    <td>05/01/2027</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Serginho</strong></td>
+                    <td>Realeza</td>
+                    <td>2025/2026</td>
+                    <td>10</td>
+                    <td>25/05/2026</td>
+                    <td>03/06/2026</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Tiago</strong></td>
+                    <td>Realeza</td>
+                    <td>2025/2026</td>
+                    <td>30</td>
+                    <td>11/01/2027</td>
+                    <td>09/02/2027</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-title">Calendário de Férias por Mês</h2>
+    
+    <div class="calendar-grid">
+        <div class="month-card">
+            <h3>Maio / 2026</h3>
+            <ul>
+                <li>• <strong>Ederson</strong> (Ampére) 26/05/2026 a 10/06/2026</li>
+                <li>• <strong>Serginho</strong> (Realeza) 25/05/2026 a 03/06/2026</li>
+            </ul>
         </div>
 
-        <!-- Formulário de Cadastro -->
-        <h2>Escala de Férias</h2>
-        <div class="form-cadastro">
-            <form id="form-tecnico" onsubmit="salvarTecnico(event)">
-                <input type="hidden" id="edit-index" value="">
-                <div class="grid-form">
-                    <div class="form-group">
-                        <label for="colaborador">Colaborador</label>
-                        <input type="text" id="colaborador" required placeholder="Nome do técnico">
-                    </div>
-                    <div class="form-group">
-                        <label for="cidade">Cidade</label>
-                        <input type="text" id="cidade" required placeholder="Cidade de atuação">
-                    </div>
-                    <div class="form-group">
-                        <label for="periodo">Período Aquisitivo</label>
-                        <input type="text" id="periodo" value="2025/2026" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="dias">Dias</label>
-                        <input type="number" id="dias" required min="1" placeholder="Ex: 15">
-                    </div>
-                    <div class="form-group">
-                        <label for="inicio">Início</label>
-                        <input type="date" id="inicio" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fim">Fim</label>
-                        <input type="date" id="fim" required>
-                    </div>
-                    <button type="submit" id="btn-salvar">Adicionar Técnico</button>
-                </div>
-            </form>
+        <div class="month-card">
+            <h3>Junho / 2026</h3>
+            <ul>
+                <li>• <strong>Ederson</strong> (Ampére) 26/05/2026 a 10/06/2026</li>
+                <li>• <strong>Guilherme</strong> (Ampére) 15/06/2026 a 04/07/2026</li>
+                <li>• <strong>Serginho</strong> (Realeza) 25/05/2026 a 03/06/2026</li>
+            </ul>
         </div>
 
-        <!-- Tabela de Dados -->
-        <div class="tabela-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Colaborador</th>
-                        <th>Cidade</th>
-                        <th>Período Aquisitivo</th>
-                        <th>Dias</th>
-                        <th>Início das Férias</th>
-                        <th>Fim das Férias</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela-corpo">
-                    <!-- Inserido via JS -->
-                </tbody>
-            </table>
+        <div class="month-card">
+            <h3>Julho / 2026</h3>
+            <ul>
+                <li>• <strong>Guilherme</strong> (Ampére) 15/06/2026 a 04/07/2026</li>
+                <li>• <strong>Valdenor</strong> (Ampére) 16/07/2026 a 29/07/2026</li>
+                <li>• <strong>Odair</strong> (Capanema) 22/07/2026 a 13/08/2026</li>
+                <li>• <strong>Cleverson</strong> (Dois Vizinhos) 15/07/2026 a 24/07/2026</li>
+            </ul>
         </div>
 
-        <!-- Calendário Agrupado por Mês -->
-        <h2>Calendário de Férias por Mês</h2>
-        <div class="calendario-mensal" id="calendario-meses">
-            <!-- Inserido via JS -->
+        <div class="month-card">
+            <h3>Agosto / 2026</h3>
+            <ul>
+                <li>• <strong>Odair</strong> (Capanema) 22/07/2026 a 13/08/2026</li>
+                <li>• <strong>Samuel</strong> (Dois Vizinhos) 03/08/2026 a 07/08/2026</li>
+            </ul>
+        </div>
+
+        <div class="month-card">
+            <h3>Dezembro / 2026</h3>
+            <ul>
+                <li>• <strong>Vinicios</strong> (Capanema) 22/12/2026 a 05/01/2027</li>
+                <li>• <strong>Marcio</strong> (Dois Vizinhos) 21/12/2026 a 04/01/2027</li>
+                <li>• <strong>Alessandro</strong> (Realeza) 17/12/2026 a 05/01/2027</li>
+            </ul>
+        </div>
+
+        <div class="month-card">
+            <h3>Janeiro / 2027</h3>
+            <ul>
+                <li>• <strong>Marcos</strong> (Ampére) 04/01/2027 a 18/01/2027</li>
+                <li>• <strong>Vinicios</strong> (Capanema) 22/12/2026 a 05/01/2027</li>
+                <li>• <strong>Renan</strong> (Capitão) 04/01/2027 a 23/01/2027</li>
+                <li>• <strong>Marcio</strong> (Dois Vizinhos) 21/12/2026 a 04/01/2027</li>
+                <li>• <strong>Alessandro</strong> (Realeza) 17/12/2026 a 05/01/2027</li>
+                <li>• <strong>Tiago</strong> (Realeza) 11/01/2027 a 09/02/2027</li>
+            </ul>
+        </div>
+
+        <div class="month-card">
+            <h3>Fevereiro / 2027</h3>
+            <ul>
+                <li>• <strong>Rodrigo</strong> (Capitão) 01/02/2027 a 20/02/2027</li>
+                <li>• <strong>Tiago</strong> (Realeza) 11/01/2027 a 09/02/2027</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // Dados Iniciais Baseados no Print Atual
-        let tecnicos = [
-            { colaborador: "Ederson", cidade: "Ampére", periodo: "2025/2026", dias: 15, inicio: "2026-05-26", fim: "2026-06-10" },
-            { colaborador: "Guilherme", cidade: "Ampére", periodo: "2025/2026", dias: 20, inicio: "2026-06-15", fim: "2026-07-04" },
-            { colaborador: "Valdenor", cidade: "Ampére", periodo: "2025/2026", dias: 14, inicio: "2026-07-16", fim: "2026-07-29" },
-            { colaborador: "Marcos", cidade: "Ampére", periodo: "2025/2026", dias: 15, inicio: "2027-01-04", fim: "2027-01-18" },
-            { colaborador: "Odair", cidade: "Capanema", periodo: "2025/2026", dias: 20, inicio: "2026-07-22", fim: "2026-08-13" },
-            { colaborador: "Vinicios", cidade: "Capanema", periodo: "2025/2026", dias: 15, inicio: "2026-12-22", fim: "2027-01-05" },
-            { colaborador: "Renan", cidade: "Capitão", periodo: "2025/2026", dias: 20, inicio: "2027-01-04", fim: "2027-01-23" },
-            { colaborador: "Rodrigo", cidade: "Capitão", periodo: "2025/2026", dias: 20, inicio: "2027-02-01", fim: "2027-02-20" },
-            { colaborador: "Cleverson", cidade: "Dois Vizinhos", periodo: "2025/2026", dias: 10, inicio: "2026-07-15", fim: "2026-07-24" },
-            { colaborador: "Samuel", cidade: "Dois Vizinhos", periodo: "2025/2026", dias: 5, inicio: "2026-08-03", fim: "2026-08-07" },
-            { colaborador: "Marcio", cidade: "Dois Vizinhos", periodo: "2025/2026", dias: 20, inicio: "2026-12-21", fim: "2027-01-04" },
-            { colaborador: "Serginho", cidade: "Realeza", periodo: "2025/2026", dias: 10, inicio: "2026-05-25", fim: "2026-06-03" },
-            { colaborador: "Alessandro", cidade: "Realeza", periodo: "2025/2026", dias: 15, inicio: "2026-12-17", fim: "2027-01-05" },
-            { colaborador: "Tiago", cidade: "Realeza", periodo: "2025/2026", dias: 30, inicio: "2027-01-11", fim: "2027-02-09" }
-        ];
+        let linhaEmEdicao = null;
 
-        const hoje = new Date("2026-07-01"); // Data Fixa de Contexto da sua aplicação (01/07/2026)
-
-        function formatarDataBR(dataString) {
-            const d = new Date(dataString + "T00:00:00");
-            return d.toLocaleDateString('pt-BR');
+        function parseDate(str) {
+            const parts = str.split('/');
+            return new Date(parts[2], parts[1] - 1, parts[0]);
         }
 
-        // Regra Solicitada: Ordenar estritamente por Ordem Alfabética de Cidade
-        function ordenarPorCidade() {
-            tecnicos.sort((a, b) => {
-                let cidadeA = a.cidade.toLowerCase();
-                let cidadeB = b.cidade.toLowerCase();
-                if (cidadeA < cidadeB) return -1;
-                if (cidadeA > cidadeB) return 1;
-                
-                // Se as cidades forem iguais, ordena por colaborador
-                let nomeA = a.colaborador.toLowerCase();
-                let nomeB = b.colaborador.toLowerCase();
-                return nomeA.localeCompare(nomeB);
-            });
+        // Converte formato HTML (aaaa-mm-dd) para padrão brasileiro (dd/mm/aaaa)
+        function formatarDataBR(strHTML) {
+            if(!strHTML) return "";
+            const parts = strHTML.split('-');
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
         }
 
-        function renderizarTudo() {
-            ordenarPorCidade();
-            renderizarTabela();
-            renderizarAlertas();
-            renderizarCalendarioMeses();
+        // Converte padrão brasileiro (dd/mm/aaaa) para formato HTML (aaaa-mm-dd)
+        function formatarDataHTML(strBR) {
+            if(!strBR) return "";
+            const parts = strBR.split('/');
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
         }
 
-        function renderizarTabela() {
-            const corpo = document.getElementById("tabela-corpo");
-            corpo.innerHTML = "";
-            tecnicos.forEach((t, index) => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td><strong>${t.colaborador}</strong></td>
-                    <td>${t.cidade}</td>
-                    <td>${t.periodo}</td>
-                    <td>${t.dias}</td>
-                    <td>${formatarDataBR(t.inicio)}</td>
-                    <td>${formatarDataBR(t.fim)}</td>
-                    <td>
-                        <button class="btn-acao btn-editar" onclick="editarTecnico(${index})">Editar</button>
-                        <button class="btn-acao btn-deletar" onclick="deletarTecnico(${index})">Deletar</button>
-                    </td>
-                `;
-                corpo.appendChild(tr);
-            });
-        }
+        function atualizarPrazosDinamicamente() {
+            const hoje = new Date();
+            hoje.setHours(0,0,0,0);
 
-        function renderizarAlertas() {
-            const listaRetornos = document.getElementById("lista-retornos");
-            const listaSaidas = document.getElementById("lista-saidas");
-            const listaConflitos = document.getElementById("lista-conflitos");
-            const painelConflitosContainer = document.getElementById("painel-conflitos-container");
+            const retornoList = document.getElementById('retorno-list');
+            const saidaList = document.getElementById('saida-list');
 
-            listaRetornos.innerHTML = "";
-            listaSaidas.innerHTML = "";
-            listaConflitos.innerHTML = "";
-            
-            let encontrouRetorno = false;
-            let encontrouSaida = false;
-            let encontrouConflito = false;
+            retornoList.innerHTML = '';
+            saidaList.innerHTML = '';
 
-            // Conjunto para evitar exibir o mesmo par de conflito de forma duplicada
-            let conflitosRegistrados = new Set();
+            const linhas = document.querySelectorAll('#escala-tabela tbody tr');
 
-            tecnicos.forEach((t, index) => {
-                const dataInicio = new Date(t.inicio + "T00:00:00");
-                const dataFim = new Date(t.fim + "T00:00:00");
+            linhas.forEach(linha => {
+                const colunas = linha.querySelectorAll('td');
+                if (colunas.length < 6) return;
 
-                // Diferença em dias
-                const diffRetorno = Math.ceil((dataFim - hoje) / (1000 * 60 * 60 * 24));
-                const diffSaida = Math.ceil((dataInicio - hoje) / (1000 * 60 * 60 * 24));
+                const nome = colunas[0].innerText.trim();
+                const city = colunas[1].innerText.trim();
+                const strInicio = colunas[4].innerText.trim();
+                const strFim = colunas[5].innerText.trim();
 
-                // Retornando de férias nos próximos 7 dias (ou hoje)
-                if (diffRetorno >= 0 && diffRetorno <= 7) {
-                    encontrouRetorno = true;
-                    const li = document.createElement("li");
-                    li.innerHTML = `O técnico <strong>${t.colaborador}</strong> (${t.cidade}) encerra as férias em <strong>${formatarDataBR(t.fim)}</strong> (Falta(m) ${diffRetorno} dia(s)).`;
-                    listaRetornos.appendChild(li);
-                }
+                if(!strInicio || !strFim) return;
 
-                // Saindo de férias em breve (próximos 30 dias a partir de hoje)
-                if (diffSaida > 0 && diffSaida <= 30) {
-                    encontrouSaida = true;
-                    const li = document.createElement("li");
-                    li.innerHTML = `O técnico <strong>${t.colaborador}</strong> (${t.cidade}) inicia as férias em <strong>${formatarDataBR(t.inicio)}</strong> (Em ${diffSaida} dias).`;
-                    listaSaidas.appendChild(li);
-                }
+                const dataInicio = parseDate(strInicio);
+                const dataFim = parseDate(strFim);
 
-                // Validação de Coincidência de Férias na Mesma Cidade
-                for (let j = index + 1; j < tecnicos.length; j++) {
-                    const outro = tecnicos[j];
-                    
-                    if (t.cidade.toLowerCase() === outro.cidade.toLowerCase()) {
-                        const inicioA = new Date(t.inicio + "T00:00:00");
-                        const fimA = new Date(t.fim + "T00:00:00");
-                        const inicioB = new Date(outro.inicio + "T00:00:00");
-                        const fimB = new Date(outro.fim + "T00:00:00");
+                const diffInicio = Math.ceil((dataInicio - hoje) / (1000 * 60 * 60 * 24));
+                const diffFim = Math.ceil((dataFim - hoje) / (1000 * 60 * 60 * 24));
 
-                        // Verifica sobreposição de períodos
-                        if (inicioA <= fimB && inicioB <= fimA) {
-                            encontrouConflito = true;
-                            const chaveConflito = [t.colaborador, outro.colaborador].sort().join("-");
-                            
-                            if (!conflitosRegistrados.has(chaveConflito)) {
-                                conflitosRegistrados.add(chaveConflito);
-                                const li = document.createElement("li");
-                                li.innerHTML = `Coincidência em <strong>${t.cidade}</strong>: <strong>${t.colaborador}</strong> (${formatarDataBR(t.inicio)} a ${formatarDataBR(t.fim)}) e <strong>${outro.colaborador}</strong> (${formatarDataBR(outro.inicio)} a ${formatarDataBR(outro.fim)}) estão de férias ao mesmo tempo!`;
-                                listaConflitos.appendChild(li);
-                            }
-                        }
+                // 1. Técnico atualmente de férias retornando nos próximos 7 dias
+                if (hoje >= dataInicio && hoje <= dataFim) {
+                    if (diffFim >= 0 && diffFim <= 7) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `O técnico <strong>${nome}</strong> (${city}) encerra as férias em <strong>${strFim}</strong> (Falta(m) ${diffFim} dia(s)).`;
+                        retornoList.appendChild(li);
                     }
                 }
-            });
 
-            // Exibe ou oculta o painel do topo dependendo de haver conflitos
-            if (encontrouConflito) {
-                painelConflitosContainer.style.display = "block";
-            } else {
-                painelConflitosContainer.style.display = "none";
-            }
-
-            if(!encontrouRetorno) listaRetornos.innerHTML = "<li>Nenhum técnico retornando nos próximos 7 dias.</li>";
-            if(!encontrouSaida) listaSaidas.innerHTML = "<li>Nenhum técnico saindo de férias nos próximos dias.</li>";
-        }
-
-        function renderizarCalendarioMeses() {
-            const container = document.getElementById("calendario-meses");
-            container.innerHTML = "";
-
-            const mesesNome = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            let mapeamento = {};
-
-            tecnicos.forEach(t => {
-                let start = new Date(t.inicio + "T00:00:00");
-                let end = new Date(t.fim + "T00:00:00");
-                let atual = new Date(start.getFullYear(), start.getMonth(), 1);
-
-                while (atual <= end) {
-                    let chaveAnoMes = `${atual.getFullYear()}-${String(atual.getMonth() + 1).padStart(2, '0')}`;
-                    if (!mapeamento[chaveAnoMes]) mapeamento[chaveAnoMes] = [];
-                    mapeamento[chaveAnoMes].push(t);
-                    atual.setMonth(atual.getMonth() + 1);
+                // 2. Técnico saindo de férias nos próximos dias
+                if (diffInicio > 0 && diffInicio <= 30) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `O técnico <strong>${nome}</strong> (${city}) inicia as férias em <strong>${strInicio}</strong> (Em ${diffInicio} dias).`;
+                    saidaList.appendChild(li);
                 }
             });
 
-            const chavesOrdenadas = Object.keys(mapeamento).sort();
-
-            chavesOrdenadas.forEach(chave => {
-                const [ano, mesNum] = chave.split("-");
-                const nomeMes = mesesNome[parseInt(mesNum) - 1];
-
-                const cardMes = document.createElement("div");
-                cardMes.className = "card-mes";
-                cardMes.innerHTML = `<h4>${nomeMes} / ${ano}</h4><ul id="lista-${chave}"></ul>`;
-                
-                const ul = cardMes.querySelector("ul");
-
-                // O mapeamento herda a ordenação por cidades prévia dos técnicos
-                mapeamento[chave].forEach(t => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `<span>• <strong>${t.colaborador}</strong> (${t.cidade})</span> <small style="color: var(--texto-secundario)">${formatarDataBR(t.inicio)} a ${formatarDataBR(t.fim)}</small>`;
-                    ul.appendChild(li);
-                });
-
-                container.appendChild(cardMes);
-            });
+            if (retornoList.children.length === 0) {
+                retornoList.innerHTML = '<li>Nenhum técnico retornando nos próximos 7 dias.</li>';
+            }
+            if (saidaList.children.length === 0) {
+                saidaList.innerHTML = '<li>Nenhum técnico saindo de férias nos próximos dias.</li>';
+            }
         }
 
-        function salvarTecnico(e) {
-            e.preventDefault();
-            const index = document.getElementById("edit-index").value;
-            
-            const novoTecnico = {
-                colaborador: document.getElementById("colaborador").value,
-                cidade: document.getElementById("cidade").value,
-                periodo: document.getElementById("periodo").value,
-                dias: parseInt(document.getElementById("dias").value),
-                inicio: document.getElementById("inicio").value,
-                fim: document.getElementById("fim").value
-            };
+        // Gerencia cliques na tabela (Editar e Deletar)
+        document.querySelector('#escala-tabela tbody').addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-deletar')) {
+                if(confirm("Tem certeza que deseja deletar este registro?")) {
+                    e.target.closest('tr').remove();
+                    atualizarPrazosDinamicamente();
+                }
+            } 
+            else if (e.target.classList.contains('btn-editar')) {
+                linhaEmEdicao = e.target.closest('tr');
+                const colunas = linhaEmEdicao.querySelectorAll('td');
 
-            if (index === "") {
-                tecnicos.push(novoTecnico);
+                document.getElementById('input-colaborador').value = colunas[0].innerText.trim();
+                document.getElementById('input-cidade').value = colunas[1].innerText.trim();
+                document.getElementById('input-periodo').value = colunas[2].innerText.trim();
+                document.getElementById('input-dias').value = colunas[3].innerText.trim();
+                document.getElementById('input-inicio').value = formatarDataHTML(colunas[4].innerText.trim());
+                document.getElementById('input-fim').value = formatarDataHTML(colunas[5].innerText.trim());
+
+                document.getElementById('btn-salvar').innerText = "Atualizar Técnico";
+            }
+        });
+
+        // Ação do botão principal (Adicionar ou Atualizar)
+        document.getElementById('btn-salvar').addEventListener('click', function() {
+            const nome = document.getElementById('input-colaborador').value.trim();
+            const cidade = document.getElementById('input-cidade').value.trim();
+            const periodo = document.getElementById('input-periodo').value.trim();
+            const dias = document.getElementById('input-dias').value.trim();
+            const inicio = document.getElementById('input-inicio').value;
+            const fim = document.getElementById('input-fim').value;
+
+            if(!nome || !cidade || !inicio || !fim) {
+                alert("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
+
+            const dataInicioBR = formatarDataBR(inicio);
+            const dataFimBR = formatarDataBR(fim);
+
+            if (linhaEmEdicao) {
+                // Atualiza linha existente
+                const colunas = linhaEmEdicao.querySelectorAll('td');
+                colunas[0].innerHTML = `<strong>${nome}</strong>`;
+                colunas[1].innerText = cidade;
+                colunas[2].innerText = periodo;
+                colunas[3].innerText = dias;
+                colunas[4].innerText = dataInicioBR;
+                colunas[5].innerText = dataFimBR;
+
+                linhaEmEdicao = null;
+                document.getElementById('btn-salvar').innerText = "Adicionar Técnico";
             } else {
-                tecnicos[index] = novoTecnico;
-                document.getElementById("edit-index").value = "";
-                document.getElementById("btn-salvar").innerText = "Adicionar Técnico";
+                // Cria nova linha
+                const tbody = document.querySelector('#escala-tabela tbody');
+                const novaLinha = document.createElement('tr');
+                novaLinha.innerHTML = `
+                    <td><strong>${nome}</strong></td>
+                    <td>${cidade}</td>
+                    <td>${periodo}</td>
+                    <td>${dias}</td>
+                    <td>${dataInicioBR}</td>
+                    <td>${dataFimBR}</td>
+                    <td><button class="btn-action btn-editar">EDITAR</button><button class="btn-action btn-deletar">DELETAR</button></td>
+                `;
+                tbody.appendChild(novaLinha);
             }
 
-            document.getElementById("form-tecnico").reset();
-            document.getElementById("periodo").value = "2025/2026";
-            renderizarTudo();
-        }
+            // Limpa o formulário
+            document.getElementById('input-colaborador').value = '';
+            document.getElementById('input-cidade').value = '';
+            document.getElementById('input-periodo').value = '2025/2026';
+            document.getElementById('input-dias').value = '';
+            document.getElementById('input-inicio').value = '';
+            document.getElementById('input-fim').value = '';
 
-        function editarTecnico(index) {
-            const t = tecnicos[index];
-            document.getElementById("colaborador").value = t.colaborador;
-            document.getElementById("cidade").value = t.cidade;
-            document.getElementById("periodo").value = t.periodo;
-            document.getElementById("dias").value = t.dias;
-            document.getElementById("inicio").value = t.inicio;
-            document.getElementById("fim").value = t.fim;
-            document.getElementById("edit-index").value = index;
-            document.getElementById("btn-salvar").innerText = "Atualizar Técnico";
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+            atualizarPrazosDinamicamente();
+        });
 
-        function deletarTecnico(index) {
-            if(confirm("Deseja realmente remover este técnico da escala?")) {
-                tecnicos.splice(index, 1);
-                renderizarTudo();
-            }
-        }
-
-        // Inicialização do Sistema
-        renderizarTudo();
+        window.onload = atualizarPrazosDinamicamente;
     </script>
 </body>
 </html>
