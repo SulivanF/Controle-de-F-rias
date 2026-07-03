@@ -1,43 +1,94 @@
-# 📅 Controle de Férias - Regional Ampére
+# 📅 CONTROLE DE FÉRIAS — REGIONAL AMPÉRE
 
-Uma aplicação web moderna, responsiva e de alta performance para a gestão, visualização e controle de escalas de férias da equipe técnica da Regional Ampére. Desenvolvida no formato *Single Page Application* (SPA), ela centraliza a estrutura, a estilização e a inteligência em um único arquivo de código limpo.
-
----
-
-## 🎨 Nova Identidade Visual (Design Atualizado)
-
-O sistema passou por uma reformulação visual completa, adotando uma estética premium inspirada em *Dark Mode* moderno com contrastes marcantes:
-*   **Fundo Dark Absoluto:** Base construída em tons de cinza escuro e preto (`#0d0d11`) para garantir o conforto visual em monitoramentos prolongados.
-*   **Acentos em Vermelho Vibrante:** Botões de ações principais e destaques estruturais utilizam vermelho cirúrgico (`#e63946`) para direcionar o olhar do usuário.
-*   **Alertas Contextuais:** Cores semânticas aplicadas rigorosamente nas caixas de notificação (Verde para retornos iminentes e Laranja para saídas em breve).
-*   **Tipografia:** Integração com a fonte *Inter* via Google Fonts, conferindo um aspecto limpo e excelente legibilidade em tabelas de dados.
+Sistema de gestão de escalas, retornos de técnicos e análise de concorrência de períodos de férias para a Regional Ampére e cidades de atuação da região.
 
 ---
 
-## 🛠️ Funcionalidades e Regras de Negócio Implementadas
+## 🔔 Visão Geral de Alertas
 
-### 1. Ordenação Automática por Cidades (Ordem Alfabética)
-O motor de renderização organiza os registros de forma estrita e automática em tempo de execução:
-*   Qualquer novo técnico inserido ou registro editado faz a tabela inteira ser reorganizada de **A a Z pelo nome da Cidade**.
-*   **Critério de Desempate:** Se dois ou mais técnicos pertencerem à mesma cidade, o sistema realiza uma subordinação alfabética secundária baseada no **Nome do Colaborador**.
+O sistema monitora automaticamente os prazos de retorno e saída dos colaboradores para facilitar o planejamento da equipe.
 
-### 2. Painel Dinâmico de Notificações
-Monitoramento inteligente baseado no dia atual configurado no sistema (`01/07/2026`):
-*   **Retornando em Breve:** Lista de forma automatizada colaboradores que faltam 7 dias ou menos para encerrar o período de descanso.
-*   **Saindo em Breve:** Alerta antecipadamente os técnicos com saídas programadas para os próximos 30 dias.
+### Retornando em Breve (Próximos 7 dias)
+*   **Guilherme (Ampére):** Retorna em **04/07/2026** (1 dia restante).
 
-### 3. Calendário Automatizado por Mês
-Geração dinâmica de cartões informativos ao final da página que funcionam como uma linha do tempo, agrupando as férias vigentes mês a mês para prever a cobertura da equipe.
+### Saindo em Breve (Próximos dias)
+*   **Cleverson (Dois Vizinhos):** Sai em **15/07/2026** (em 12 dias).
+*   **Valdenor (Ampére):** Sai em **16/07/2026** (em 13 dias).
+*   **Odair (Capanema):** Sai em **22/07/2026** (em 19 dias).
 
 ---
 
-## 📁 Estrutura do Projeto
+## ➕ Adicionar / Editar Escala
 
-Por conveniência de implantação e compatibilidade total com plataformas como o **CodePen**, o código foi arquitetado de maneira unificada:
+Para inserir ou modificar um registro no sistema, utilize o formulário de cadastro informando os seguintes campos obrigatórios:
 
-```text
-├── index.html
-    ├── [HEAD]   - Configurações globais e fontes externas (Inter).
-    ├── [STYLE]  - CSS moderno construído através de Variáveis Nativas.
-    ├── [BODY]   - Componentes visuais (Formulário, Tabela de Dados e Cards).
-    └── [SCRIPT] - Motor JavaScript (CRUD, lógica de ordenação e tratamento de datas).
+*   **Nome do Técnico:** *Ex: Ederson*
+*   **Cidade de Atuação:** Selecione entre as opções homologadas:
+    *   Ampére
+    *   Capanema
+    *   Capitão
+    *   Dois Vizinhos
+    *   Realeza
+*   **Período Aquisitivo:** *Ex: 2025/2026*
+*   **Dias:** Quantidade de dias de gozo (*Ex: 15*)
+*   **Início das Férias:** Data de início (`dd/mm/aaaa`)
+*   **Fim das Férias:** Data de término (`dd/mm/aaaa`)
+
+---
+
+## 📋 Escala de Férias Cadastrada
+
+| Colaborador | Cidade | Período Aquisitivo | Dias | Início das Férias | Fim das Férias |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Serginho** | Realeza | 2025/2026 | 10 | 25/05/2026 | 03/06/2026 |
+| **Ederson** | Ampére | 2025/2026 | 15 | 26/05/2026 | 10/06/2026 |
+| **Guilherme** | Ampére | 2025/2026 | 20 | 15/06/2026 | 04/07/2026 |
+| **Cleverson** | Dois Vizinhos | 2025/2026 | 10 | 15/07/2026 | 24/07/2026 |
+| **Valdenor** | Ampére | 2025/2026 | 14 | 16/07/2026 | 29/07/2026 |
+| **Odair** | Capanema | 2025/2026 | 20 | 22/07/2026 | 13/08/2026 |
+| **Samuel** | Dois Vizinhos | 2025/2026 | 5 | 03/08/2026 | 07/08/2026 |
+| **Alessandro** | Realeza | 2025/2026 | 15 | 17/12/2026 | 05/01/2027 |
+| **Marcio** | Dois Vizinhos | 2025/2026 | 20 | 21/12/2026 | 04/01/2027 |
+| **Vinicios** | Capanema | 2025/2026 | 15 | 22/12/2026 | 05/01/2026 |
+| **Marcos** | Ampére | 2025/2026 | 15 | 04/01/2027 | 18/01/2027 |
+| **Renan** | Capitão | 2025/2026 | 20 | 04/01/2027 | 23/01/2027 |
+| **Tiago** | Realeza | 2025/2026 | 30 | 11/01/2027 | 09/02/2027 |
+| **Rodrigo** | Capitão | 2025/2026 | 20 | 01/02/2027 | 20/02/2027 |
+
+---
+
+## 📅 Calendário de Férias por Mês
+
+### Maio / 2026
+*   **Ederson** (Ampére) — 26/05/2026 a 10/06/2026
+*   **Serginho** (Realeza) — 25/05/2026 a 03/06/2026
+
+### Junho / 2026
+*   **Ederson** (Ampére) — 26/05/2026 a 10/06/2026
+*   **Guilherme** (Ampére) — 15/06/2026 a 04/07/2026
+*   **Serginho** (Realeza) — 25/05/2026 a 03/06/2026
+
+### Julho / 2026
+*   **Guilherme** (Ampére) — 15/06/2026 a 04/07/2026
+*   **Valdenor** (Ampére) — 16/07/2026 a 29/07/2026
+*   **Odair** (Capanema) — 22/07/2026 a 13/08/2026
+*   **Cleverson** (Dois Vizinhos) — 15/07/2026 a 24/07/2026
+
+### Agosto / 2026
+*   **Odair** (Capanema) — 22/07/2026 a 13/08/2026
+*   **Samuel** (Dois Vizinhos) — 03/08/2026 a 07/08/2026
+
+### Dezembro / 2026
+*   **Marcio** (Dois Vizinhos) — 21/12/2026 a 04/01/2027
+*   **Alessandro** (Realeza) — 17/12/2026 a 05/01/2027
+
+### Janeiro / 2027
+*   **Marcos** (Ampére) — 04/01/2027 a 18/01/2027
+*   **Renan** (Capitão) — 04/01/2027 a 23/01/2027
+*   **Marcio** (Dois Vizinhos) — 21/12/2026 a 04/01/2027
+*   **Alessandro** (Realeza) — 17/12/2026 a 05/01/2027
+*   **Tiago** (Realeza) — 11/01/2027 a 09/02/2027
+
+### Fevereiro / 2027
+*   **Rodrigo** (Capitão) — 01/02/2027 a 20/02/2027
+*   **Tiago** (Realeza) — 11/01/2027 a 09/02/2027
