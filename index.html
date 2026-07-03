@@ -240,6 +240,7 @@
         .btn-container {
             display: inline-flex;
             gap: 8px;
+            align-items: center;
         }
 
         .btn-acao {
@@ -378,7 +379,6 @@
     <div class="calendario-secao" id="calendario-mensal"></div>
 
     <script>
-        // Data base simulada baseada no contexto de Julho de 2026
         const DATA_HOJE = new Date('2026-07-03T00:00:00');
 
         let tecnicos = [
@@ -387,7 +387,7 @@
             { id: 3, nome: "Marcos", cidade: "Ampére", periodo: "2025/2026", dias: 15, inicio: "2027-01-04", fim: "2027-01-18" },
             { id: 4, nome: "Valdenor", cidade: "Ampére", periodo: "2025/2026", dias: 14, inicio: "2026-07-16", fim: "2026-07-29" },
             { id: 5, nome: "Odair", cidade: "Capanema", periodo: "2025/2026", dias: 20, inicio: "2026-07-22", fim: "2026-08-13" },
-            { id: 6, nome: "Vinicios", cidade: "Capanema", periodo: "2025/2026", dias: 15, inicio: "2026-12-22", fim: "2026-01-05" },
+            { id: 6, nome: "Vinicios", cidade: "Capanema", periodo: "2025/2026", dias: 15, inicio: "2026-12-22", fim: "2027-01-05" },
             { id: 7, nome: "Renan", cidade: "Capitão", periodo: "2025/2026", dias: 20, inicio: "2027-01-04", fim: "2027-01-23" },
             { id: 8, nome: "Rodrigo", cidade: "Capitão", periodo: "2025/2026", dias: 20, inicio: "2027-02-01", fim: "2027-02-20" },
             { id: 9, nome: "Cleverson", cidade: "Dois Vizinhos", periodo: "2025/2026", dias: 10, inicio: "2026-07-15", fim: "2026-07-24" },
@@ -419,6 +419,14 @@
             listaSaidas.innerHTML = '';
             divCalendario.innerHTML = '';
 
+            // Regra: Ordenar alfabeticamente por Cidade, e depois por nome do Técnico
+            tecnicos.sort((a, b) => {
+                const cidadeCompare = a.cidade.localeCompare(b.cidade);
+                if (cidadeCompare !== 0) return cidadeCompare;
+                return a.nome.localeCompare(b.nome);
+            });
+
+            // Lógica de detecção de conflitos por Cidade
             const conflitosIds = new Set();
             for (let i = 0; i < tecnicos.length; i++) {
                 for (let j = i + 1; j < tecnicos.length; j++) {
@@ -431,6 +439,7 @@
                 }
             }
 
+            // Renderizar Tabela Principal
             tecnicos.forEach(t => {
                 const tr = document.createElement('tr');
                 const temConflito = conflitosIds.has(t.id);
@@ -471,6 +480,7 @@
             if(!listaRetornos.innerHTML) listaRetornos.innerHTML = '<li>Nenhum retorno programado para os próximos 7 dias.</li>';
             if(!listaSaidas.innerHTML) listaSaidas.innerHTML = '<li>Nenhuma saída próxima detectada.</li>';
 
+            // Agrupamento do Calendário Mensal
             const mesesMap = {};
             const nomesMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -480,7 +490,7 @@
 
                 while (atual.getFullYear() < fimFérias.getFullYear() || (atual.getFullYear() === fimFérias.getFullYear() && atual.getMonth() <= fimFérias.getMonth())) {
                     const chaveMes = `${nomesMeses[atual.getMonth()]} / ${atual.getFullYear()}`;
-                    const ordemAnoMes = FlatYearMonth(atual.getFullYear(), atual.getMonth());
+                    const ordemAnoMes = atual.getFullYear() * 12 + atual.getMonth();
 
                     if (!mesesMap[chaveMes]) {
                         mesesMap[chaveMes] = { label: chaveMes, ordem: ordemAnoMes, itens: [] };
@@ -495,10 +505,6 @@
                 }
             });
 
-            function FlatYearMonth(ano, mes) {
-                return ano * 12 + mes;
-            }
-
             const mesesOrdenados = Object.values(mesesMap).sort((a, b) => a.ordem - b.ordem);
             mesesOrdenados.forEach(mes => {
                 const bloco = document.createElement('div');
@@ -507,7 +513,6 @@
                 
                 const ul = document.createElement('ul');
                 mes.itens.forEach(t => {
-                    // Mantém e exibe o intervalo de datas completo ao lado do nome e da cidade
                     ul.innerHTML += `<li>• <strong>${t.nome}</strong> (${t.cidade}) <span style="color: var(--texto-secundario); font-size: 0.85rem;">${formatarDataBR(t.inicio)} a ${formatarDataBR(t.fim)}</span></li>`;
                 });
                 bloco.appendChild(ul);
