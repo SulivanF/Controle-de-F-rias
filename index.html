@@ -5,306 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Férias - Regional Ampére</title>
     <style>
-        :root {
-            --bg-principal: #0b0b0b;
-            --bg-card: #161616;
-            --bg-input: #222222;
-            --texto-principal: #ffffff;
-            --texto-secundario: #888888;
-            --borda: #2a2a2a;
-            
-            /* Paleta Temática: Vermelho, Preto e Grafite */
-            --cor-primaria: #e50914; /* Vermelho premium / Destaque */
-            --cor-perigo: #ff3333;   /* Vermelho vivo para alertas críticos */
-            --cor-grafite: #444444;  /* Grafite para elementos secundários/neutros */
-            
-            --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.5);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-principal);
-            color: var(--texto-principal);
-            padding: 40px 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--borda);
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--texto-principal);
-            margin-bottom: 8px;
-        }
-
-        header h1 span {
-            color: var(--cor-primaria);
-        }
-
-        header p {
-            color: var(--texto-secundario);
-            font-size: 1rem;
-        }
-
-        h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 40px 0 15px 0;
-            color: var(--texto-principal);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h2::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 18px;
-            background-color: var(--cor-primaria);
-            border-radius: 2px;
-        }
-
-        .container-paineis {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .container-paineis { grid-template-columns: 1fr; }
-        }
-
-        .painel {
-            background-color: var(--bg-card);
-            border: 1px solid var(--borda);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: var(--shadow-card);
-        }
-
-        .painel h3 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--borda);
-            letter-spacing: 0.5px;
-        }
-
+        :root {--bg-principal: #0b0b0b; --bg-card: #161616; --bg-input: #222222; --texto-principal: #ffffff; --texto-secundario: #888888; --borda: #2a2a2a; --cor-primaria: #e50914; --cor-perigo: #ff3333; --cor-grafite: #444444; --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.5); --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        * {margin: 0; padding: 0; box-sizing: border-box; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body {background-color: var(--bg-principal); color: var(--texto-principal); padding: 40px 20px; max-width: 1400px; margin: 0 auto; }
+        header {text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--borda); }
+        header h1 {font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; color: var(--texto-principal); margin-bottom: 8px; }
+        header h1 span {color: var(--cor-primaria); }
+        header p {color: var(--texto-secundario); font-size: 1rem; }
+        h2 {font-size: 1.3rem; font-weight: 700; margin: 40px 0 15px 0; color: var(--texto-principal); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
+        h2::before {content: ''; display: inline-block; width: 4px; height: 18px; background-color: var(--cor-primaria); border-radius: 2px; }
+        .container-paineis {display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+        @media (max-width: 768px) {.container-paineis { grid-template-columns: 1fr; } }
+        .painel {background-color: var(--bg-card); border: 1px solid var(--borda); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-card); }
+        .painel h3 {font-size: 0.95rem; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--borda); letter-spacing: 0.5px; }
         .retorno-breve h3 { color: var(--texto-principal); }
         .saida-breve h3 { color: var(--cor-primaria); }
-
         ul { list-style: none; }
-        li {
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            color: var(--texto-secundario);
-            line-height: 1.5;
-        }
+        li {margin-bottom: 12px; font-size: 0.9rem; color: var(--texto-secundario); line-height: 1.5; }
         li strong { color: var(--texto-principal); }
         li em { color: var(--cor-primaria); font-style: normal; font-weight: 600; }
-
-        form {
-            background-color: var(--bg-card);
-            padding: 28px;
-            border-radius: 12px;
-            border: 1px solid var(--borda);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            align-items: flex-end;
-            box-shadow: var(--shadow-card);
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--texto-secundario);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input, select {
-            background-color: var(--bg-input);
-            border: 1px solid var(--borda);
-            color: var(--texto-principal);
-            padding: 12px 14px;
-            border-radius: 8px;
-            outline: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        input:focus, select:focus {
-            border-color: var(--cor-primaria);
-            background-color: #2a2a2a;
-        }
-
-        form button {
-            background-color: var(--cor-primaria);
-            color: #fff;
-            font-weight: 700;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            letter-spacing: 0.5px;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            transition: var(--transition);
-        }
-
-        form button:hover { 
-            background-color: #b80710;
-            transform: translateY(-1px);
-        }
-
-        .table-container {
-            overflow-x: auto;
-            background-color: var(--bg-card);
-            border: 1px solid var(--borda);
-            border-radius: 12px;
-            box-shadow: var(--shadow-card);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-
-        th, td {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--borda);
-        }
-
-        th {
-            background-color: #0f0f0f;
-            color: var(--texto-secundario);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
+        form {background-color: var(--bg-card); padding: 28px; border-radius: 12px; border: 1px solid var(--borda); display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; align-items: flex-end; box-shadow: var(--shadow-card); }
+        .form-group {display: flex; flex-direction: column; }
+        .form-group label {font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; color: var(--texto-secundario); text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select {background-color: var(--bg-input); border: 1px solid var(--borda); color: var(--texto-principal); padding: 12px 14px; border-radius: 8px; outline: none; font-size: 0.9rem; transition: var(--transition); }
+        input:focus, select:focus {border-color: var(--cor-primaria); background-color: #2a2a2a; }
+        form button {background-color: var(--cor-primaria); color: #fff; font-weight: 700; padding: 14px; border: none; border-radius: 8px; cursor: pointer; letter-spacing: 0.5px; font-size: 0.85rem; text-transform: uppercase; transition: var(--transition); }
+        form button:hover {background-color: #b80710; transform: translateY(-1px); }
+        .table-container {overflow-x: auto; background-color: var(--bg-card); border: 1px solid var(--borda); border-radius: 12px; box-shadow: var(--shadow-card); }
+        table {width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+        th, td {padding: 16px 20px; border-bottom: 1px solid var(--borda); }
+        th {background-color: #0f0f0f; color: var(--texto-secundario); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         tr:last-child td { border-bottom: none; }
-
-        tr.conflito {
-            background-color: rgba(229, 9, 20, 0.06);
-        }
-
-        tr.conflito td {
-            border-bottom: 1px solid rgba(229, 9, 20, 0.2);
-        }
-
-        .badge-conflito {
-            background-color: rgba(229, 9, 20, 0.15);
-            border: 1px solid var(--cor-perigo);
-            color: var(--cor-perigo);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .btn-container {
-            display: inline-flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .btn-acao {
-            padding: 6px 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: 1px solid transparent;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: var(--transition);
-        }
-
-        .btn-deletar { 
-            background-color: transparent; 
-            border-color: var(--cor-grafite);
-            color: var(--texto-principal); 
-        }
-        .btn-deletar:hover { 
-            background-color: var(--cor-perigo); 
-            border-color: var(--cor-perigo);
-            color: white; 
-        }
-
-        .btn-editar { 
-            background-color: var(--cor-grafite); 
-            color: white; 
-        }
-        .btn-editar:hover { 
-            background-color: #555555;
-            transform: translateY(-1px);
-        }
-
-        .calendario-secao {
-            background-color: var(--bg-card);
-            border: 1px solid var(--borda);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: var(--shadow-card);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .mes-bloco {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--borda);
-            border-radius: 8px;
-            padding: 16px;
-        }
-
-        .mes-bloco h4 {
-            color: var(--texto-principal);
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--borda);
-        }
+        tr.conflito {background-color: rgba(229, 9, 20, 0.06); }
+        tr.conflito td {border-bottom: 1px solid rgba(229, 9, 20, 0.2); }
+        .badge-conflito {background-color: rgba(229, 9, 20, 0.15); border: 1px solid var(--cor-perigo); color: var(--cor-perigo); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-right: 10px; }
+        .btn-container {display: inline-flex; gap: 8px; align-items: center; }
+        .btn-acao {padding: 6px 12px; font-size: 0.75rem; font-weight: 700; cursor: pointer; border: 1px solid transparent; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; transition: var(--transition); }
+        .btn-deletar {background-color: transparent; border-color: var(--cor-grafite); color: var(--texto-principal); }
+        .btn-deletar:hover {background-color: var(--cor-perigo); border-color: var(--cor-perigo); color: white; }
+        .btn-editar {background-color: var(--cor-grafite); color: white; }
+        .btn-editar:hover {background-color: #555555; transform: translateY(-1px); }
+        .calendario-secao {background-color: var(--bg-card); border: 1px solid var(--borda); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-card); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .mes-bloco {background-color: rgba(255, 255, 255, 0.02); border: 1px solid var(--borda); border-radius: 8px; padding: 16px; }
+        .mes-bloco h4 {color: var(--texto-principal); font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--borda); }
     </style>
 </head>
 <body>
-
     <header>
         <h1>📅 CONTROLE DE FÉRIAS — REGIONAL <span>AMPÉRE</span></h1>
         <p>Gestão de escalas, retornos de técnicos e concorrência de períodos</p>
@@ -324,53 +70,19 @@
     <h2>➕ Adicionar/Editar Escala</h2>
     <form id="form-tecnico">
         <input type="hidden" id="tecnico-id">
-        <div class="form-group">
-            <label>Nome do Técnico</label>
-            <input type="text" id="nome" required placeholder="Ex: Ederson">
-        </div>
-        <div class="form-group">
-            <label>Cidade de atuação</label>
-            <select id="cidade" required>
-                <option value="Ampére">Ampére</option>
-                <option value="Capanema">Capanema</option>
-                <option value="Capitão">Capitão</option>
-                <option value="Dois Vizinhos">Dois Vizinhos</option>
-                <option value="Realeza">Realeza</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Período Aquisitivo</label>
-            <input type="text" id="periodo" required placeholder="Ex: 2025/2026">
-        </div>
-        <div class="form-group">
-            <label>Dias</label>
-            <input type="number" id="dias" required placeholder="Ex: 15">
-        </div>
-        <div class="form-group">
-            <label>Início das Férias</label>
-            <input type="date" id="inicio" required>
-        </div>
-        <div class="form-group">
-            <label>Fim das Férias</label>
-            <input type="date" id="fim" required>
-        </div>
+        <div class="form-group"><label>Nome do Técnico</label><input type="text" id="nome" required placeholder="Ex: Ederson"></div>
+        <div class="form-group"><label>Cidade de atuação</label><select id="cidade" required><option value="Ampére">Ampére</option><option value="Capanema">Capanema</option><option value="Capitão">Capitão</option><option value="Dois Vizinhos">Dois Vizinhos</option><option value="Realeza">Realeza</option></select></div>
+        <div class="form-group"><label>Período Aquisitivo</label><input type="text" id="periodo" required placeholder="Ex: 2025/2026"></div>
+        <div class="form-group"><label>Dias</label><input type="number" id="dias" required placeholder="Ex: 15"></div>
+        <div class="form-group"><label>Início das Férias</label><input type="date" id="inicio" required></div>
+        <div class="form-group"><label>Fim das Férias</label><input type="date" id="fim" required></div>
         <button type="submit" id="btn-submit">ADICIONAR TÉCNICO</button>
     </form>
 
     <h2>Escala de Férias</h2>
     <div class="table-container">
         <table>
-            <thead>
-                <tr>
-                    <th>Colaborador</th>
-                    <th>Cidade</th>
-                    <th>Período Aquisitivo</th>
-                    <th>Dias</th>
-                    <th>Início das Férias</th>
-                    <th>Fim das Férias</th>
-                    <th>Status / Ações</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Colaborador</th><th>Cidade</th><th>Período Aquisitivo</th><th>Dias</th><th>Início das Férias</th><th>Fim das Férias</th><th>Status / Ações</th></tr></thead>
             <tbody id="tabela-corpo"></tbody>
         </table>
     </div>
@@ -380,8 +92,6 @@
 
     <script>
         const DATA_HOJE = new Date('2026-07-03T00:00:00');
-
-        // Lista padrão usada caso o localStorage esteja vazio
         const tecnicosPadrao = [
             { id: 1, nome: "Ederson", cidade: "Ampére", periodo: "2025/2026", dias: 15, inicio: "2026-05-26", fim: "2026-06-10" },
             { id: 2, nome: "Guilherme", cidade: "Ampére", periodo: "2025/2026", dias: 20, inicio: "2026-06-15", fim: "2026-07-04" },
@@ -399,53 +109,26 @@
             { id: 14, nome: "Tiago", cidade: "Realeza", periodo: "2025/2026", dias: 30, inicio: "2027-01-11", fim: "2027-02-09" }
         ];
 
-        // Carrega dados salvos ou inicializa com os padrões
-        let tecnicos = JSON.parse(localStorage.getItem('controle_ferias_tecnicos'));
-        if (!tecnicos || tecnicos.length === 0) {
-            tecnicos = tecnicosPadrao;
-            salvarNoLocalStorage();
-        }
-
-        function salvarNoLocalStorage() {
-            localStorage.setItem('controle_ferias_tecnicos', JSON.stringify(tecnicos));
-        }
-
-        function formatarDataBR(dataStr) {
-            const parts = dataStr.split('-');
-            if(parts.length !== 3) return dataStr;
-            return `${parts[2]}/${parts[1]}/${parts[0]}`;
-        }
-
-        function verificarSobreposicao(ini1, fim1, ini2, fim2) {
-            return new Date(ini1) <= new Date(fim2) && new Date(ini2) <= new Date(fim1);
-        }
+        let tecnicos = JSON.parse(localStorage.getItem('controle_ferias_tecnicos')) || tecnicosPadrao;
+        
+        function salvarNoLocalStorage() {localStorage.setItem('controle_ferias_tecnicos', JSON.stringify(tecnicos)); }
+        function formatarDataBR(dataStr) {const parts = dataStr.split('-'); return `${parts[2]}/${parts[1]}/${parts[0]}`; }
+        function verificarSobreposicao(ini1, fim1, ini2, fim2) {return new Date(ini1) <= new Date(fim2) && new Date(ini2) <= new Date(fim1); }
 
         function renderizarApp() {
             const corpoTabela = document.getElementById('tabela-corpo');
             const listaRetornos = document.getElementById('lista-retornos');
             const listaSaidas = document.getElementById('lista-saidas');
             const divCalendario = document.getElementById('calendario-mensal');
+            corpoTabela.innerHTML = ''; listaRetornos.innerHTML = ''; listaSaidas.innerHTML = ''; divCalendario.innerHTML = '';
 
-            corpoTabela.innerHTML = '';
-            listaRetornos.innerHTML = '';
-            listaSaidas.innerHTML = '';
-            divCalendario.innerHTML = '';
-
-            // Mantém ordenação alfabética por Cidade -> Técnico
-            tecnicos.sort((a, b) => {
-                const cidadeCompare = a.cidade.localeCompare(b.cidade);
-                if (cidadeCompare !== 0) return cidadeCompare;
-                return a.nome.localeCompare(b.nome);
-            });
+            tecnicos.sort((a, b) => a.cidade.localeCompare(b.cidade) || a.nome.localeCompare(b.nome));
 
             const conflitosIds = new Set();
             for (let i = 0; i < tecnicos.length; i++) {
                 for (let j = i + 1; j < tecnicos.length; j++) {
-                    if (tecnicos[i].cidade === tecnicos[j].cidade) {
-                        if (verificarSobreposicao(tecnicos[i].inicio, tecnicos[i].fim, tecnicos[j].inicio, tecnicos[j].fim)) {
-                            conflitosIds.add(tecnicos[i].id);
-                            conflitosIds.add(tecnicos[j].id);
-                        }
+                    if (tecnicos[i].cidade === tecnicos[j].cidade && verificarSobreposicao(tecnicos[i].inicio, tecnicos[i].fim, tecnicos[j].inicio, tecnicos[j].fim)) {
+                        conflitosIds.add(tecnicos[i].id); conflitosIds.add(tecnicos[j].id);
                     }
                 }
             }
@@ -454,37 +137,16 @@
                 const tr = document.createElement('tr');
                 const temConflito = conflitosIds.has(t.id);
                 if (temConflito) tr.classList.add('conflito');
-
-                tr.innerHTML = `
-                    <td><strong>${t.nome}</strong></td>
-                    <td>${t.cidade}</td>
-                    <td>${t.periodo}</td>
-                    <td>${t.dias}</td>
-                    <td>${formatarDataBR(t.inicio)}</td>
-                    <td>${formatarDataBR(t.fim)}</td>
-                    <td>
-                        <div class="btn-container">
-                            ${temConflito ? '<span class="badge-conflito">Conflito</span>' : ''}
-                            <button class="btn-acao btn-editar" onclick="carregarParaEdicao(${t.id})">Editar</button>
-                            <button class="btn-acao btn-deletar" onclick="deletarTecnico(${t.id})">Deletar</button>
-                        </div>
-                    </td>
-                `;
+                tr.innerHTML = `<td><strong>${t.nome}</strong></td><td>${t.cidade}</td><td>${t.periodo}</td><td>${t.dias}</td><td>${formatarDataBR(t.inicio)}</td><td>${formatarDataBR(t.fim)}</td><td><div class="btn-container">${temConflito ? '<span class="badge-conflito">Conflito</span>' : ''}<button class="btn-acao btn-editar" onclick="carregarParaEdicao(${t.id})">Editar</button><button class="btn-acao btn-deletar" onclick="deletarTecnico(${t.id})">Deletar</button></div></td>`;
                 corpoTabela.appendChild(tr);
 
                 const dataInicio = new Date(t.inicio + 'T00:00:00');
                 const dataFim = new Date(t.fim + 'T00:00:00');
-                
                 const diffRetorno = Math.ceil((dataFim - DATA_HOJE) / (1000 * 60 * 60 * 24));
                 const diffSaida = Math.ceil((dataInicio - DATA_HOJE) / (1000 * 60 * 60 * 24));
 
-                if (diffRetorno >= 0 && diffRetorno <= 7) {
-                    listaRetornos.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) retorna em <em>${formatarDataBR(t.fim)}</em> (${diffRetorno}d restantes).</li>`;
-                }
-
-                if (diffSaida > 0 && diffSaida <= 30) {
-                    listaSaidas.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) sai em <em>${formatarDataBR(t.inicio)}</em> (em ${diffSaida} dias).</li>`;
-                }
+                if (diffRetorno >= 0 && diffRetorno <= 7) listaRetornos.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) retorna em <em>${formatarDataBR(t.fim)}</em>.</li>`;
+                if (diffSaida > 0 && diffSaida <= 30) listaSaidas.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) sai em <em>${formatarDataBR(t.inicio)}</em>.</li>`;
             });
 
             if(!listaRetornos.innerHTML) listaRetornos.innerHTML = '<li>Nenhum retorno programado para os próximos 7 dias.</li>';
@@ -492,97 +154,40 @@
 
             const mesesMap = {};
             const nomesMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
             tecnicos.forEach(t => {
                 let atual = new Date(t.inicio + 'T00:00:00');
                 const fimFérias = new Date(t.fim + 'T00:00:00');
-
-                while (atual.getFullYear() < fimFérias.getFullYear() || (atual.getFullYear() === fimFérias.getFullYear() && atual.getMonth() <= fimFérias.getMonth())) {
+                while (atual <= fimFérias) {
                     const chaveMes = `${nomesMeses[atual.getMonth()]} / ${atual.getFullYear()}`;
-                    const ordemAnoMes = atual.getFullYear() * 12 + atual.getMonth();
-
-                    if (!mesesMap[chaveMes]) {
-                        mesesMap[chaveMes] = { label: chaveMes, ordem: ordemAnoMes, itens: [] };
-                    }
-                    
-                    if (!mesesMap[chaveMes].itens.some(item => item.id === t.id)) {
-                        mesesMap[chaveMes].itens.push(t);
-                    }
-
-                    atual.setMonth(atual.getMonth() + 1);
-                    atual.setDate(1);
+                    if (!mesesMap[chaveMes]) mesesMap[chaveMes] = { label: chaveMes, ordem: atual.getFullYear() * 12 + atual.getMonth(), itens: [] };
+                    if (!mesesMap[chaveMes].itens.find(item => item.id === t.id)) mesesMap[chaveMes].itens.push(t);
+                    atual.setMonth(atual.getMonth() + 1); atual.setDate(1);
                 }
             });
 
-            const mesesOrdenados = Object.values(mesesMap).sort((a, b) => a.ordem - b.ordem);
-            mesesOrdenados.forEach(mes => {
+            Object.values(mesesMap).sort((a, b) => a.ordem - b.ordem).forEach(mes => {
                 const bloco = document.createElement('div');
                 bloco.classList.add('mes-bloco');
-                bloco.innerHTML = `<h4>${mes.label}</h4>`;
-                
-                const ul = document.createElement('ul');
-                mes.itens.forEach(t => {
-                    ul.innerHTML += `<li>• <strong>${t.nome}</strong> (${t.cidade}) <span style="color: var(--texto-secundario); font-size: 0.85rem;">${formatarDataBR(t.inicio)} a ${formatarDataBR(t.fim)}</span></li>`;
-                });
-                bloco.appendChild(ul);
+                bloco.innerHTML = `<h4>${mes.label}</h4><ul>` + mes.itens.map(t => `<li>• <strong>${t.nome}</strong> (${t.cidade}) <span style="color: var(--texto-secundario); font-size: 0.85rem;">${formatarDataBR(t.inicio)} a ${formatarDataBR(t.fim)}</span></li>`).join('') + '</ul>';
                 divCalendario.appendChild(bloco);
             });
         }
 
-        function deletarTecnico(id) {
-            tecnicos = tecnicos.filter(t => t.id !== id);
-            salvarNoLocalStorage();
-            renderizarApp();
-        }
-
+        function deletarTecnico(id) {tecnicos = tecnicos.filter(t => t.id !== id); salvarNoLocalStorage(); renderizarApp(); }
         function carregarParaEdicao(id) {
             const tecnico = tecnicos.find(t => t.id === id);
-            if (!tecnico) return;
-
-            document.getElementById('tecnico-id').value = tecnico.id;
-            document.getElementById('nome').value = tecnico.nome;
-            document.getElementById('cidade').value = tecnico.cidade;
-            document.getElementById('periodo').value = tecnico.periodo;
-            document.getElementById('dias').value = tecnico.dias;
-            document.getElementById('inicio').value = tecnico.inicio;
-            document.getElementById('fim').value = tecnico.fim;
-
-            document.getElementById('btn-submit').innerText = "SALVAR ALTERAÇÕES";
-            window.scrollTo({ top: document.getElementById('form-tecnico').offsetTop - 20, behavior: 'smooth' });
+            document.getElementById('tecnico-id').value = tecnico.id; document.getElementById('nome').value = tecnico.nome; document.getElementById('cidade').value = tecnico.cidade; document.getElementById('periodo').value = tecnico.periodo; document.getElementById('dias').value = tecnico.dias; document.getElementById('inicio').value = tecnico.inicio; document.getElementById('fim').value = tecnico.fim;
+            document.getElementById('btn-submit').innerText = "SALVAR ALTERAÇÕES"; window.scrollTo({ top: document.getElementById('form-tecnico').offsetTop - 20, behavior: 'smooth' });
         }
 
         document.getElementById('form-tecnico').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('tecnico-id').value;
-            const tecnicoData = {
-                nome: document.getElementById('nome').value,
-                cidade: document.getElementById('cidade').value,
-                periodo: document.getElementById('periodo').value,
-                dias: parseInt(document.getElementById('dias').value),
-                inicio: document.getElementById('inicio').value,
-                fim: document.getElementById('fim').value
-            };
-
-            if (id) {
-                const index = tecnicos.findIndex(t => t.id == id);
-                if (index !== -1) {
-                    tecnicos[index] = { ...tecnicos[index], ...tecnicoData };
-                }
-                document.getElementById('tecnico-id').value = '';
-                document.getElementById('btn-submit').innerText = "ADICIONAR TÉCNICO";
-            } else {
-                const novo = {
-                    id: Date.now(),
-                    ...tecnicoData
-                };
-                tecnicos.push(novo);
-            }
-
-            salvarNoLocalStorage();
-            renderizarApp();
-            this.reset();
+            const tecnicoData = {nome: document.getElementById('nome').value, cidade: document.getElementById('cidade').value, periodo: document.getElementById('periodo').value, dias: parseInt(document.getElementById('dias').value), inicio: document.getElementById('inicio').value, fim: document.getElementById('fim').value };
+            if (id) { const index = tecnicos.findIndex(t => t.id == id); tecnicos[index] = { ...tecnicos[index], ...tecnicoData }; document.getElementById('tecnico-id').value = ''; document.getElementById('btn-submit').innerText = "ADICIONAR TÉCNICO"; }
+            else { tecnicos.push({id: Date.now(), ...tecnicoData }); }
+            salvarNoLocalStorage(); renderizarApp(); this.reset();
         });
-
         renderizarApp();
     </script>
 </body>
