@@ -91,7 +91,10 @@
     <div class="calendario-secao" id="calendario-mensal"></div>
 
     <script>
-        const DATA_HOJE = new Date('2026-07-03T00:00:00');
+        // Atualizado para usar a data real do dia
+        const DATA_HOJE = new Date();
+        DATA_HOJE.setHours(0,0,0,0);
+
         const tecnicosPadrao = [
             { id: 1, nome: "Ederson", cidade: "Ampére", periodo: "2025/2026", dias: 15, inicio: "2026-05-26", fim: "2026-06-10" },
             { id: 2, nome: "Guilherme", cidade: "Ampére", periodo: "2025/2026", dias: 20, inicio: "2026-06-15", fim: "2026-07-04" },
@@ -110,17 +113,23 @@
         ];
 
         let tecnicos = JSON.parse(localStorage.getItem('controle_ferias_tecnicos')) || tecnicosPadrao;
-        
-        function salvarNoLocalStorage() {localStorage.setItem('controle_ferias_tecnicos', JSON.stringify(tecnicos)); }
-        function formatarDataBR(dataStr) {const parts = dataStr.split('-'); return `${parts[2]}/${parts[1]}/${parts[0]}`; }
-        function verificarSobreposicao(ini1, fim1, ini2, fim2) {return new Date(ini1) <= new Date(fim2) && new Date(ini2) <= new Date(fim1); }
+
+        function salvarNoLocalStorage() { localStorage.setItem('controle_ferias_tecnicos', JSON.stringify(tecnicos)); }
+
+        function formatarDataBR(dataStr) { const parts = dataStr.split('-'); return `${parts[2]}/${parts[1]}/${parts[0]}`; }
+
+        function verificarSobreposicao(ini1, fim1, ini2, fim2) { return new Date(ini1) <= new Date(fim2) && new Date(ini2) <= new Date(fim1); }
 
         function renderizarApp() {
             const corpoTabela = document.getElementById('tabela-corpo');
             const listaRetornos = document.getElementById('lista-retornos');
             const listaSaidas = document.getElementById('lista-saidas');
             const divCalendario = document.getElementById('calendario-mensal');
-            corpoTabela.innerHTML = ''; listaRetornos.innerHTML = ''; listaSaidas.innerHTML = ''; divCalendario.innerHTML = '';
+            
+            corpoTabela.innerHTML = '';
+            listaRetornos.innerHTML = '';
+            listaSaidas.innerHTML = '';
+            divCalendario.innerHTML = '';
 
             tecnicos.sort((a, b) => a.cidade.localeCompare(b.cidade) || a.nome.localeCompare(b.nome));
 
@@ -142,16 +151,23 @@
 
                 const dataInicio = new Date(t.inicio + 'T00:00:00');
                 const dataFim = new Date(t.fim + 'T00:00:00');
+                
+                // Cálculo preciso de dias restantes
                 const diffRetorno = Math.ceil((dataFim - DATA_HOJE) / (1000 * 60 * 60 * 24));
                 const diffSaida = Math.ceil((dataInicio - DATA_HOJE) / (1000 * 60 * 60 * 24));
 
-                if (diffRetorno >= 0 && diffRetorno <= 7) listaRetornos.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) retorna em <em>${formatarDataBR(t.fim)}</em>.</li>`;
-                if (diffSaida > 0 && diffSaida <= 30) listaSaidas.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) sai em <em>${formatarDataBR(t.inicio)}</em>.</li>`;
+                if (diffRetorno >= 0 && diffRetorno <= 7) {
+                    listaRetornos.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) retorna em <em>${formatarDataBR(t.fim)}</em>.</li>`;
+                }
+                if (diffSaida >= 0 && diffSaida <= 30) {
+                    listaSaidas.innerHTML += `<li>O técnico <strong>${t.nome}</strong> (${t.cidade}) sai em <em>${formatarDataBR(t.inicio)}</em>.</li>`;
+                }
             });
 
             if(!listaRetornos.innerHTML) listaRetornos.innerHTML = '<li>Nenhum retorno programado para os próximos 7 dias.</li>';
             if(!listaSaidas.innerHTML) listaSaidas.innerHTML = '<li>Nenhuma saída próxima detectada.</li>';
 
+            // Calendário...
             const mesesMap = {};
             const nomesMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
             tecnicos.forEach(t => {
@@ -164,7 +180,6 @@
                     atual.setMonth(atual.getMonth() + 1); atual.setDate(1);
                 }
             });
-
             Object.values(mesesMap).sort((a, b) => a.ordem - b.ordem).forEach(mes => {
                 const bloco = document.createElement('div');
                 bloco.classList.add('mes-bloco');
@@ -173,21 +188,40 @@
             });
         }
 
-        function deletarTecnico(id) {tecnicos = tecnicos.filter(t => t.id !== id); salvarNoLocalStorage(); renderizarApp(); }
+        function deletarTecnico(id) { tecnicos = tecnicos.filter(t => t.id !== id); salvarNoLocalStorage(); renderizarApp(); }
         function carregarParaEdicao(id) {
             const tecnico = tecnicos.find(t => t.id === id);
-            document.getElementById('tecnico-id').value = tecnico.id; document.getElementById('nome').value = tecnico.nome; document.getElementById('cidade').value = tecnico.cidade; document.getElementById('periodo').value = tecnico.periodo; document.getElementById('dias').value = tecnico.dias; document.getElementById('inicio').value = tecnico.inicio; document.getElementById('fim').value = tecnico.fim;
-            document.getElementById('btn-submit').innerText = "SALVAR ALTERAÇÕES"; window.scrollTo({ top: document.getElementById('form-tecnico').offsetTop - 20, behavior: 'smooth' });
+            document.getElementById('tecnico-id').value = tecnico.id;
+            document.getElementById('nome').value = tecnico.nome;
+            document.getElementById('cidade').value = tecnico.cidade;
+            document.getElementById('periodo').value = tecnico.periodo;
+            document.getElementById('dias').value = tecnico.dias;
+            document.getElementById('inicio').value = tecnico.inicio;
+            document.getElementById('fim').value = tecnico.fim;
+            document.getElementById('btn-submit').innerText = "SALVAR ALTERAÇÕES";
+            window.scrollTo({ top: document.getElementById('form-tecnico').offsetTop - 20, behavior: 'smooth' });
         }
 
         document.getElementById('form-tecnico').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('tecnico-id').value;
-            const tecnicoData = {nome: document.getElementById('nome').value, cidade: document.getElementById('cidade').value, periodo: document.getElementById('periodo').value, dias: parseInt(document.getElementById('dias').value), inicio: document.getElementById('inicio').value, fim: document.getElementById('fim').value };
-            if (id) { const index = tecnicos.findIndex(t => t.id == id); tecnicos[index] = { ...tecnicos[index], ...tecnicoData }; document.getElementById('tecnico-id').value = ''; document.getElementById('btn-submit').innerText = "ADICIONAR TÉCNICO"; }
-            else { tecnicos.push({id: Date.now(), ...tecnicoData }); }
+            const tecnicoData = {
+                nome: document.getElementById('nome').value,
+                cidade: document.getElementById('cidade').value,
+                periodo: document.getElementById('periodo').value,
+                dias: parseInt(document.getElementById('dias').value),
+                inicio: document.getElementById('inicio').value,
+                fim: document.getElementById('fim').value
+            };
+            if (id) {
+                const index = tecnicos.findIndex(t => t.id == id);
+                tecnicos[index] = { ...tecnicos[index], ...tecnicoData };
+                document.getElementById('tecnico-id').value = '';
+                document.getElementById('btn-submit').innerText = "ADICIONAR TÉCNICO";
+            } else { tecnicos.push({id: Date.now(), ...tecnicoData }); }
             salvarNoLocalStorage(); renderizarApp(); this.reset();
         });
+
         renderizarApp();
     </script>
 </body>
